@@ -1,0 +1,7 @@
+# Campusly AI Agent
+
+Campus organizers need to check activity details, draft messages and follow up in the discussions they already use. This repository owns the proposed assistant and its synthetic integration. Campusly core owns permissions, official actions and the human timeline.
+
+## Getting started
+
+Start with the [product specification](docs/specs/CAMPUSLY_AI_PRODUCT_UX_SPEC_v1.0.md), [architecture](docs/engineering/ARCHITECTURE.md) and [active milestones](docs/engineering/MILESTONES.md). Walk through the [synthetic scenario](examples/workshop.md) without credentials or a core checkout. Only the engineering foundation exists today. Build, container and local run commands are deliverables of AI10 once approved.
