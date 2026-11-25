@@ -58,12 +58,7 @@ the lab and removes its disposable database.
   provider returned HTTP 403. CAMS mapped it to HTTP 502. There was no
   hosted reply to display or reopen.
 - An authenticated, read-only GET to `/v1/models` also returned HTTP 403
-  with a geographic-access diagnostic. Key validity and model access
-  remain unverified from this connection. The 403 response time is
-  not a model latency measurement.
-- The provider's terms prohibit bypassing its access restrictions.
-  A hosted rerun needs a Cerebras-authorized environment.
-  [Cerebras terms of use](https://www.cerebras.ai/terms-of-service)
+
 
 No Cloud report update applies because this check did not involve the
 Cloud research tasks. The live result is **BLOCKED** and the adapter's
