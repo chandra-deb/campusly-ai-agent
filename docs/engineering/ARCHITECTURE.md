@@ -73,3 +73,25 @@ The conversation is owned by the student within the organization. A
 database cascade removes its turns on hard delete. The Go service
 processes the signed context in memory for the duration of the call.
 See [ADR 0005](../decisions/0005-personal-conversation-retention.md).
+
+## B1 live organization context
+
+```mermaid
+sequenceDiagram
+  participant H as H5 personal chat
+  participant C as Core
+  participant A as Local Go service
+  participant D as Campusly database
+  H->>C: Ask in the current organization
+  C->>C: Check presidency and conversation owner
+  C->>A: Signed v3 intent request
+  A-->>C: Scoped managed-organizations intent
+  C->>D: Recheck presidency and read current roles
+  C-->>H: Complete answer with organization sources
+```
+
+The v3 intent exchange has a one-second Core budget. A plain chat intent
+uses the existing v2 model exchange. Campusly source cards disappear when
+the user switches chats or reloads the transcript. Core rebuilds the answer
+on the next question using the then-current authorization. Go receives no
+organization rows and has no credentials to query Core.

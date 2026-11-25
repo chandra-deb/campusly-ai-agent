@@ -127,3 +127,18 @@ reached the provider and received HTTP 403. The read-only models
 endpoint returned a geographic-access diagnostic. Hosted completion,
 key validity, model quality and model latency remain unverified.
 See the [Cerebras smoke evidence](../evidence/CEREBRAS_SMOKE.md).
+
+## B1 — Organization answers from current authorization
+
+B1 distinguishes recognizing a question from supplying its answer. The
+local Go service recognizes the managed-organizations intent. Core checks
+active president assignments and sends the matching organization names
+straight to H5. The answer is transient, so a previously visible role is
+outside the next prompt's history. The synthetic cases exercise two
+managed organizations, a revoked role, and an unrelated organization.
+
+The deterministic recognizer exercises transport and permissions on the
+supported prompts. Language coverage and hosted-model grounding remain
+**NOT MEASURED**. The Cloud report is outside this single-host local
+functional check. See the [decision](../decisions/0006-live-context-and-confirmed-actions.md)
+and [B1 evidence](../evidence/B1.md). Owner review is **PENDING**.
