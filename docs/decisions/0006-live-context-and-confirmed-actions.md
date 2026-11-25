@@ -55,3 +55,11 @@ create another activity. Expect the database to contain one activity,
 one discussion and one receipt after a replay, and none after a failed
 transaction. The receipt stores identifiers and a keyed payload
 fingerprint. It does not store the draft text or the private conversation.
+
+B6 drafts a notice from the next scheduled session's recorded time and
+venue. It describes the recorded venue without inferring that the venue
+changed. When the source has no venue, Core asks the president to update
+the activity. This is preferable to passing the activity's discussion
+through the model, since the schedule owns the facts and the discussion
+may include private inquiries. Expect the draft to link to the activity
+and leave the timeline unchanged.
