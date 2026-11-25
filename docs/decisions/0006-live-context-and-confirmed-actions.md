@@ -71,3 +71,12 @@ discussion service's room-before-role lock order. The message,
 announcement event and assistance receipt commit in one transaction.
 The sender is the approving president. We expect a wrong room, an
 edited notice or a revoked role to leave the public timeline unchanged.
+
+B8 adds an ordinary group message to the confirmation flow. The local
+resolver keeps the text supplied by the president and gives Core the
+named activity. An explicit review separates a request to draft or send
+from the confirmed write. Reusing the discussion service avoids copying
+its membership, attribution, rate limits and event rules. The same
+recipient checks apply to notices and messages, while only a notice
+creates an announcement event. Expect exact replay to post once and
+expired or revoked confirmations to leave the room unchanged.

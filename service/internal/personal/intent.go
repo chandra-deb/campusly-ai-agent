@@ -10,6 +10,7 @@ type IntentReply struct {
 	Intent   string         `json:"intent"`
 	Activity string         `json:"activity,omitempty"`
 	Draft    *ActivityDraft `json:"draft,omitempty"`
+	Message  string         `json:"message,omitempty"`
 }
 
 func resolveIntent(input Request) IntentReply {
@@ -18,7 +19,17 @@ func resolveIntent(input Request) IntentReply {
 		reply.Intent, reply.Draft = "activity_draft", draft
 		return reply
 	}
-	prompt := strings.TrimSpace(strings.TrimRight(strings.TrimSpace(input.Prompt), "?？"))
+	prompt := strings.TrimSpace(input.Prompt)
+	for _, prefix := range []string{"draft a message for ", "send a group message to "} {
+		if strings.HasPrefix(strings.ToLower(prompt), prefix) {
+			target, body, _ := strings.Cut(prompt[len(prefix):], ":")
+			if target = strings.TrimSpace(target); target != "" {
+				reply.Intent, reply.Activity, reply.Message = "message_draft", target, strings.TrimSpace(body)
+				return reply
+			}
+		}
+	}
+	prompt = strings.TrimSpace(strings.TrimRight(prompt, "?？"))
 	lower := strings.ToLower(prompt)
 	switch strings.TrimRight(lower, ".!") {
 	case "which organizations do i manage", "what organizations do i manage",

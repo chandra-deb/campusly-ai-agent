@@ -214,3 +214,19 @@ See [B7 evidence](../evidence/B7.md).
 This is a local authorization and attribution check over REST.
 Realtime delivery and Cloud behavior remain **NOT MEASURED**.
 Owner review is **PENDING**.
+
+## B8 — Confirmed ordinary group messages
+
+The assistant keeps the president's supplied group-message text and
+resolves the named discussion through Core. The test checked that
+punctuation survives drafting, wrong targets and stale approvals
+cannot post, and exact replay returns the same result. The committed
+message kept the president's identity in the existing room. It created
+a message outbox event, while the B7 notice path also creates an
+announcement event. See the [final slice evidence](../evidence/B8.md).
+
+The complete local B1–B8 scenario uses a deterministic resolver and
+synthetic data. Hosted language coverage, Cloud throughput and
+production rollout remain outside the evidence. The owner has a
+[review guide](../evidence/PHASE_B.md). Owner acceptance and report
+review are **PENDING**.

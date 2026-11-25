@@ -75,3 +75,17 @@ func TestActivityDraftProposal(t *testing.T) {
 		t.Fatalf("unexpected natural-language proposal: %+v", draft)
 	}
 }
+
+func TestGroupMessageKeepsExactTextForReview(t *testing.T) {
+	input := validRequest()
+	input.Prompt = "Send a group message to Python Workshop: Can you bring a laptop? Thanks!"
+	result := resolveIntent(input)
+	if result.Intent != "message_draft" || result.Activity != "Python Workshop" ||
+		result.Message != "Can you bring a laptop? Thanks!" {
+		t.Fatalf("unexpected message proposal: %+v", result)
+	}
+	input.Prompt = "Draft a message for Python Workshop: Can you bring a laptop?"
+	if result := resolveIntent(input); result.Message != "Can you bring a laptop?" {
+		t.Fatalf("message punctuation was changed: %+v", result)
+	}
+}
