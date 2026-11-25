@@ -8,7 +8,7 @@ Owner-agreed roadmap, 2026-11-25. All implementation slices are NOT_STARTED. AI0
 | A1 | AI01 | [A1 evidence](../evidence/A1.md) · President-only chat UI, core integration, standalone synthetic fixture, complete model response | Open assistant and chat; deny non-president and wrong actor; clean build |
 | A2 | A1 | [A2 evidence](../evidence/A2.md) · Loading, timeout, error and safe retry improvements (basic handling already in A1) | Simulate failure; retry without duplicate turns |
 | A3 | A1 | [A3 evidence](../evidence/A3.md) · Private conversation persistence | Reopen chat; verify owner isolation, retention and deletion |
-| A4 | A3 | Create, rename, switch and delete conversations | Manage separate activity chats |
+| A4 | A3 | [A4 evidence](../evidence/A4.md) · Create, rename, switch and delete conversations | Manage separate activity chats |
 | B1 | A1 | Authorized organization awareness | Ask which organizations I manage; deny unrelated or revoked access |
 | B2 | B1 | Sourced activity details, schedule, venue and status | Ask about next workshop; deny wrong tenant, abstain if missing |
 | B3 | B1 | Authorized activity statistics | Compare counts with canonical data; deny unauthorized reads |
@@ -41,6 +41,8 @@ Owner-agreed roadmap, 2026-11-25. All implementation slices are NOT_STARTED. AI0
 ## Guardrails
 
 Server-side authorization, version rejection and safe logging start at A1. Before operational writes, bind approval to actor/action/target/payload, expiry and current permissions; edits need fresh approval. Before persistence, define retention and deletion; no memory grants permissions or replaces current core facts. Personal memory never enters shared AI. Private inquiries remain excluded. D2 includes minimum reliable delivery from day one; D5 strengthens it. No token streaming. No real data, provider calls, deployment, spending or recurring jobs without separate approval. Record actual tests and sanitized screenshots; update report/blog drafts or explain N/A. Split oversized later slices before implementing.
+
+For an approved data tool, add a scoped Core API when the current endpoints cannot supply the needed Campusly data. The API must enforce live authorization for its own resource and actions.
 
 ## Legacy IDs
 
