@@ -11,7 +11,7 @@ Record task ID, revisions on each side, changed contract version, exact focused 
 ## Vertical-slice acceptance
 
 - User-facing work includes a usable local UI and integrated core/API/AI behavior. Record a manual owner scenario, observed issues, fixes and explicit accept/fix status. Enabling infrastructure tasks link to their intended slice.
-- Test complete-response behavior, loading, timeout/failure handling and current-scope authorization when relevant. No streaming requirement. Required privacy, deletion and idempotency safeguards precede the capabilities that need them.
+- Test complete-response behavior, loading, timeout/failure handling and current-scope authorization when relevant. No token streaming; R1 onward requires visible tool-event progress via authenticated SSE. Required privacy, deletion and idempotency safeguards precede the capabilities that need them.
 - Capture sanitized screenshots and feedback for reports/blogs. Agent tests do not imply owner acceptance.
 
 ## Mandatory AI phase gate (2026-11-26)
@@ -20,6 +20,13 @@ Record task ID, revisions on each side, changed contract version, exact focused 
 - Real LLM and native tool orchestration are exercised against the owner's existing local Campusly dummy-data database. Cover all phase capabilities, including non-tool context/draft/confirmation behavior; verify answers against canonical Core records.
 - Record real provider/model, revisions, case, tool selections/arguments/results, latency/usage if available, failures and omissions; check paraphrases, multi-tool reasoning, missing/ambiguous inputs, denial, retry and exact human confirmation when relevant.
 - Keep deterministic verification, real-model verification and owner acceptance separate. A failed/blocked live call is not success. Owner accepts or requests fixes before advancing to the next AI phase; R4 gates D1. No production, credentials in logs, or unauthorized spend/deployment.
+
+## Tool activity acceptance (R1–R4)
+
+- Actual started/completed/failed events arrive while processing, with safe labels, stable call identities and measured durations. A plain chat shows no invented tool calls.
+- Final result is one complete response; per-turn activity collapses and can be expanded/reopened. History is scoped and deleted with the turn.
+- Test multiple calls, failed calls, cancellation/disconnect, duplicate/out-of-order events and conversation switching; reject unauthorized/stale events. Never display raw reasoning or sensitive payloads. Confirmed writes still require explicit user approval and canonical receipts.
+- Capture sanitized H5 evidence and separate tool timing from overall turn timing. R4 owner acceptance remains mandatory.
 
 ## Framework and runtime verification
 
