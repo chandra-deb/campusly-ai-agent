@@ -1,6 +1,6 @@
 # AI milestones — owner-agreed roadmap
 
-**Decision: 2026-11-25.** Visible vertical slices, president-only personal assistant first, complete non-streamed responses. Product direction is agreed; implementation scope and technology selection remain separate.
+**Decision: 2026-11-25.** Visible vertical slices, president-only personal assistant first, complete non-streamed responses. Product direction is agreed. Go and the initial execution direction are selected in [ADR 0003](../decisions/0003-go-bounded-requests.md); Eino validation and implementation scope remain separate.
 
 | Phase | Slices | User-visible goal |
 | --- | --- | --- |
@@ -14,4 +14,6 @@ See [TASKS.md](TASKS.md) for each slice and test. AI01 design review is next; al
 
 Each user-facing slice delivers UI, core/API and AI together, focused checks and owner manual accept/fix before completion. Small infrastructure tasks may support a named slice. Use loading and error states, not token streaming; asynchronous jobs may return complete results later. Recommended order A → B → C → D → E; personal memory precedes shared AI, but may start before all B tools are done. Technical prerequisites govern independent work. Initial internal prototype after A; a useful president assistant can be separately released after selected B slices. Owner acceptance and separate rollout authorization required for every release. Single host with independent service boundaries first.
 
-AI17 retains the existing cross-repository integrated acceptance checkpoint after B8, D4, D5 and relevant security/integration checks. It is not the first manual test or a requirement for a separately approved personal release. CAMS infrastructure scaling still requires AI17 and separate authorization unless its plan is revised. Cloud submission is independent of these gates. Keep living reports and blogs current, capture sanitized screenshots, and protect academic deadlines. No technology, deployment or recurring work approved here.
+AI17 retains the existing cross-repository integrated acceptance checkpoint after B8, D4, D5 and relevant security/integration checks. It is not the first manual test or a requirement for a separately approved personal release. CAMS infrastructure scaling still requires AI17 and separate authorization unless its plan is revised. Cloud submission is independent of these gates. Keep living reports and blogs current, capture sanitized screenshots, and protect academic deadlines. No further dependency/provider selection, implementation, deployment or recurring work approved here.
+
+AI01 next: obtain scope for the small Eino validation and record results before locking the framework and approving A1. Personal assistant starts with bounded synchronous HTTP and hosted inference behind a fake-testable adapter; group jobs remain asynchronous later.

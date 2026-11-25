@@ -13,3 +13,7 @@ Record task ID, revisions on each side, changed contract version, exact focused 
 - User-facing work includes a usable local UI and integrated core/API/AI behavior. Record a manual owner scenario, observed issues, fixes and explicit accept/fix status. Enabling infrastructure tasks link to their intended slice.
 - Test complete-response behavior, loading, timeout/failure handling and current-scope authorization when relevant. No streaming requirement. Required privacy, deletion and idempotency safeguards precede the capabilities that need them.
 - Capture sanitized screenshots and feedback for reports/blogs. Agent tests do not imply owner acceptance.
+
+## Framework and runtime verification
+
+For framework-dependent changes, record official documentation/source references for the pinned version, exact dependency versions, formatting, build, focused Go test and vet outcomes (race checks where concurrency is exercised and supported). Verify behavior and permissions, not just compilation. For personal requests test deadline/cancellation, safe error and relevant concurrency/retry limits. No framework validation result may be claimed before AI01 runs. Retain errors and failed attempts as evidence.

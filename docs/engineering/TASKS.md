@@ -4,7 +4,7 @@ Owner-agreed roadmap, 2026-11-25. All implementation slices are NOT_STARTED. AI0
 
 | ID | Depends on | Deliverable | Manual test and focused checks |
 | --- | --- | --- | --- |
-| AI01 | Foundation | Review runtime, model adapter, scoped identity, complete-response contract and A1 synthetic/UI path | Record alternatives and explicit A1 authorization |
+| AI01 | Foundation | Validate Eino as the leading Go framework candidate using the bounded synthetic checks in [ADR 0003](../decisions/0003-go-bounded-requests.md); review model adapter, scoped identity, deadlines and A1 synthetic/UI path | Record versions, focused results, limitations, framework decision and explicit A1 authorization; no paid calls without separate approval |
 | A1 | AI01 | President-only chat UI, core integration, standalone synthetic fixture, complete model response | Open assistant and chat; deny non-president and wrong actor; clean build |
 | A2 | A1 | Loading, timeout, error and safe retry improvements (basic handling already in A1) | Simulate failure; retry without duplicate turns |
 | A3 | A1 | Private conversation persistence | Reopen chat; verify owner isolation, retention and deletion |

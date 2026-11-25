@@ -22,4 +22,23 @@ For later scaling, keep request handlers stateless and partition worker capacity
 
 ## Incremental delivery (ADR 0002)
 
-The diagram describes eventual boundaries, not A1 requirements. A1 needs only president-scoped UI, Core, AI service and model adapter with one complete non-streamed response and basic failure/loading states. Use a synthetic counterpart for standalone tests. Persistence, reads, confirmed actions and personal memory follow individual slices. Durable group handoff/worker design is reviewed before D2, not required for A1. Independent service boundaries and single-host deployment remain; no runtime, provider or queue technology is selected here.
+The diagram describes eventual boundaries, not A1 requirements. A1 needs only president-scoped UI, Core, AI service and model adapter with one complete non-streamed response and basic failure/loading states. Use a synthetic counterpart for standalone tests. Persistence, reads, confirmed actions and personal memory follow individual slices. Durable group handoff/worker design is reviewed before D2, not required for A1. Independent service boundaries and single-host deployment remain. [ADR 0003](../decisions/0003-go-bounded-requests.md) selects Go and bounded synchronous personal requests; Eino, provider, concrete state and queue choices remain pending.
+
+## Initial personal request boundary (proposed implementation)
+
+```mermaid
+sequenceDiagram
+  participant U as President UI
+  participant C as Campusly Core
+  participant A as Go AI service
+  participant M as Model adapter
+  U->>C: Request (loading state)
+  C->>C: Authenticate and authorize
+  C->>A: Scoped request with deadline
+  A->>M: Generate complete response
+  M-->>A: Complete output or error
+  A-->>C: Validated result or safe error
+  C-->>U: Complete response
+```
+
+A1 uses net/http and context, with a deterministic fake adapter for credential-free tests. Hosted inference requires separate approval. Propagate cancellation and deadlines, bound concurrent work and retries, and validate output. Do not hold a core database transaction during inference. No personal job queue or streaming. Later group jobs use a separately designed durable asynchronous handoff; ordinary messaging never waits for AI. Exact contracts and limits are pending AI01.

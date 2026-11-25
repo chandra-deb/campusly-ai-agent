@@ -1,6 +1,6 @@
 # 0001 — Repository boundary and first design discussion
 
-Accepted boundary: one public, independent AI repository (intentional portfolio and product demonstration; private core source and sensitive information stay outside), versioned contracts and a reproducible synthetic integration. No dependency on private backend imports. The options below are proposed.
+Accepted boundary: one public, independent AI repository (intentional portfolio and product demonstration; private core source and sensitive information stay outside), versioned contracts and a reproducible synthetic integration. No dependency on private backend imports. The options below are historical starting proposals; [ADR 0003](0003-go-bounded-requests.md) selects Go and bounded personal execution. The remaining options are open where not superseded.
 
 | Choice | Starting proposal | Trade-off and decision test |
 | --- | --- | --- |
@@ -11,6 +11,6 @@ Accepted boundary: one public, independent AI repository (intentional portfolio 
 | State | Start with source references and minimal scoped proposal/receipt state | An AI-owned relational store could support conversations and reviewed memory. A separate database adds backup, retention and deletion coordination. Defer vector retrieval until known examples show a need. |
 | Packaging | One service image with independently runnable worker and a mock core profile | Easier to reproduce than several services per capability. Decide local commands and dependency pins with the runtime. |
 
-AI01 first reviews the scoped identity, complete-response contract, synthetic fixture and A1 scope. Choose only libraries needed by that slice. Review approval/receipt and crash-after-post cases before the relevant write/group slices, and decide memory and durable job state before those capabilities. ADR 0002 supersedes the bundled sequence; the options above remain open.
+AI01 first reviews the scoped identity, complete-response contract, synthetic fixture and A1 scope. Choose only libraries needed by that slice. Review approval/receipt and crash-after-post cases before the relevant write/group slices, and decide memory and durable job state before those capabilities. ADR 0002 supersedes the bundled sequence; ADR 0003 supersedes the proposed Python runtime and initial delivery assumptions. Eino is pending validation; local inference is deferred and hosted provider selection remains open.
 
 Primary references: [Pydantic AI](https://ai.pydantic.dev/), [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview), [Redis Streams](https://redis.io/docs/latest/develop/data-types/streams/).
