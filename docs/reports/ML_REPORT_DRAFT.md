@@ -257,3 +257,32 @@ The synthetic checks cover save replay, unsupported inputs, a second
 workspace, role succession and removal. This evidence concerns data
 ownership and lifecycle. Model quality and Cloud behavior remain
 **NOT MEASURED**. Owner review is pending. [C2 evidence](../evidence/C2.md).
+
+## C3 — Use of relevant preferences across conversations
+
+Core sends the scoped, typed choices for supported checklist requests
+through signed reply v5. The Go adapter translates supported values
+into fixed style instructions. The deterministic model makes format,
+detail and tone changes observable. Other intents keep their prior
+authorization and data paths. Core compares the selected choices
+again before committing a styled reply.
+
+The synthetic checks exercise a second chat, a separate organization,
+an unrelated prompt and deletion during inference. A late result
+using a removed preference is discarded. This is evidence about
+selection, authorization and handling a concurrent change. Open-ended
+relevance, hosted generation and Cloud behavior remain **NOT MEASURED**.
+Owner review is pending. [C3 evidence](../evidence/C3.md).
+
+## C4 — Inspecting, editing and removing saved preferences
+
+The memory panel shows provenance and the last update. Core matches an
+edit to the owner, workspace, entry and last-seen timestamp. It keeps
+the original source across edits and rejects an older panel's change.
+
+The synthetic browser prompts show concise, expanded and default
+replies as the owner edits and removes the preference. The focused
+API check covers wrong scope, an invalid kind change, a stale edit
+and a request after deletion. This verifies the control path. Hosted
+style fidelity and Cloud behavior remain **NOT MEASURED**. Owner
+review is pending. [C4 evidence](../evidence/C4.md).

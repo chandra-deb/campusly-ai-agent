@@ -17,7 +17,9 @@ import (
 var testKey = bytes.Repeat([]byte{'t'}, 32)
 
 func validRequest() Request {
-	return Request{1, Scope{11, 21}, time.Now().Add(time.Second).UnixMilli(), "Workshop checklist", nil}
+	return Request{
+		Version: 1, Scope: Scope{11, 21}, Expires: time.Now().Add(time.Second).UnixMilli(), Prompt: "Workshop checklist",
+	}
 }
 
 func send(t *testing.T, handler http.Handler, input Request, signBefore func(*Request)) *httptest.ResponseRecorder {
@@ -156,5 +158,42 @@ func TestRecentContextUsesWholeTurnsWithinByteBudget(t *testing.T) {
 	w = sendTo(t, handler, RecentPath, request, nil)
 	if w.Code != 200 || !strings.Contains(w.Body.String(), "I need a workshop checklist") {
 		t.Fatalf("empty context reused a previous request: %d %s", w.Code, w.Body)
+	}
+}
+
+func TestPreferredReplyUsesOnlySupportedChoices(t *testing.T) {
+	handler := Handler(testKey, Fake{})
+	request := validRequest()
+	request.Version = 5
+	request.Preferences = []Preference{{"format", "bullets"}, {"tone", "warm"}, {"detail", "concise"}}
+	w := sendTo(t, handler, PreferredPath, request, nil)
+	if w.Code != 200 || !strings.Contains(w.Body.String(), "• Confirm") ||
+		!strings.Contains(w.Body.String(), "work through together") || strings.Contains(w.Body.String(), "3. Test") ||
+		strings.Contains(w.Body.String(), "• Test") {
+		t.Fatalf("preference reply: %d %s", w.Code, w.Body)
+	}
+
+	if w = sendTo(t, handler, PreferredPath, request, func(r *Request) { r.Preferences[0].Value = "numbered" }); w.Code != 401 {
+		t.Fatalf("tampered preference returned %d", w.Code)
+	}
+	for _, choices := range [][]Preference{
+		nil,
+		{{"tone", "student details"}},
+		{{"format", "bullets"}, {"format", "numbered"}},
+	} {
+		request.Preferences = choices
+		if w = sendTo(t, handler, PreferredPath, request, nil); w.Code != 400 {
+			t.Fatalf("invalid preferences returned %d", w.Code)
+		}
+	}
+	request.Version = 4
+	request.Preferences = []Preference{{"format", "bullets"}}
+	if w = sendTo(t, handler, RecentPath, request, nil); w.Code != 400 {
+		t.Fatalf("obsolete version accepted new fields: %d", w.Code)
+	}
+	request.Preferences = nil
+	w = sendTo(t, handler, RecentPath, request, nil)
+	if w.Code != 200 || !strings.Contains(w.Body.String(), "1. Confirm") {
+		t.Fatalf("preference leaked into another reply: %d %s", w.Code, w.Body)
 	}
 }

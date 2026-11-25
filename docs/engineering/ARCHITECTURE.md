@@ -140,3 +140,29 @@ and releases its read transaction before inference. The signed v4
 reply contract checks the number of turns and UTF-8 text size again in
 Go. The full saved transcript stays in Core. See
 [ADR 0007](../decisions/0007-personal-memory.md).
+
+## C2–C3 personal preferences
+
+```mermaid
+sequenceDiagram
+  participant H as H5 assistant
+  participant C as Core
+  participant D as PostgreSQL
+  participant A as Go assistant
+  H->>C: Save a supported reply preference
+  C->>D: Recheck presidency and save for owner and organization
+  H->>C: Ask for a workshop checklist in another chat
+  C->>D: Read current preferences in the selected scope
+  C->>A: Signed v5 reply request with approved style values
+  A-->>C: Complete reply
+  C->>D: Recheck presidency, conversation and preferences
+  alt Preferences still match
+    C-->>H: Saved reply
+  else Preference removed or changed
+    C-->>H: Retry with current choices
+  end
+```
+
+The intent request for live Campusly reads carries the prompt only.
+Using or editing a preference does not confer access to any activity or
+discussion. See [ADR 0007](../decisions/0007-personal-memory.md).

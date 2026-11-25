@@ -23,6 +23,7 @@ const (
 	ContextPath    = "/internal/v2/personal/reply"
 	IntentPath     = "/internal/v3/personal/intent"
 	RecentPath     = "/internal/v4/personal/reply"
+	PreferredPath  = "/internal/v5/personal/reply"
 	Signature      = "X-Campusly-Signature"
 	maxBody        = 16 << 10
 	maxPrompt      = 2000
@@ -47,9 +48,10 @@ type Turn struct {
 type Request struct {
 	Version int `json:"version"`
 	Scope
-	Expires int64  `json:"expires_ms"`
-	Prompt  string `json:"prompt"`
-	History []Turn `json:"history,omitempty"`
+	Expires     int64        `json:"expires_ms"`
+	Prompt      string       `json:"prompt"`
+	History     []Turn       `json:"history,omitempty"`
+	Preferences []Preference `json:"preferences,omitempty"`
 }
 
 type Reply struct {
@@ -86,6 +88,9 @@ func Handler(key []byte, model model.BaseChatModel) http.Handler {
 	mux.HandleFunc("POST "+RecentPath, func(w http.ResponseWriter, r *http.Request) {
 		s.reply(w, r, 4, maxContextBody)
 	})
+	mux.HandleFunc("POST "+PreferredPath, func(w http.ResponseWriter, r *http.Request) {
+		s.reply(w, r, 5, maxContextBody)
+	})
 	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 	})
@@ -109,11 +114,20 @@ func (s *service) reply(w http.ResponseWriter, r *http.Request, version int, bod
 	if !utf8.Valid(body) || dec.Decode(&input) != nil || dec.Decode(new(any)) != io.EOF ||
 		input.Version != version || input.Actor <= 0 || input.Organization <= 0 ||
 		!validText(input.Prompt, maxPrompt) ||
-		((version == 1 || version == 3) && input.History != nil) || len(input.History) > historyLimit(version) {
+		((version == 1 || version == 3) && input.History != nil) || len(input.History) > historyLimit(version) ||
+		(version != 5 && input.Preferences != nil) {
 		fail(w, http.StatusBadRequest, "invalid_request")
 		return
 	}
-	messages := make([]*schema.Message, 0, 2*len(input.History)+1)
+	messages := make([]*schema.Message, 0, 2*len(input.History)+2)
+	if version == 5 {
+		instructions, ok := preferenceInstructions(input.Preferences)
+		if !ok {
+			fail(w, http.StatusBadRequest, "invalid_preferences")
+			return
+		}
+		messages = append(messages, schema.SystemMessage(instructions))
+	}
 	contextBytes := len(input.Prompt)
 	for _, turn := range input.History {
 		if !validText(turn.Prompt, maxPrompt) || !validText(turn.Reply, maxReply) {
@@ -121,7 +135,7 @@ func (s *service) reply(w http.ResponseWriter, r *http.Request, version int, bod
 			return
 		}
 		contextBytes += len(turn.Prompt) + len(turn.Reply)
-		if version == 4 && contextBytes > maxRecentBytes {
+		if version >= 4 && contextBytes > maxRecentBytes {
 			fail(w, http.StatusBadRequest, "invalid_history")
 			return
 		}
@@ -166,7 +180,7 @@ func historyLimit(version int) int {
 	switch version {
 	case 2:
 		return maxHistory
-	case 4:
+	case 4, 5:
 		return maxRecentTurns
 	default:
 		return 0
@@ -196,7 +210,7 @@ func (Fake) Generate(ctx context.Context, messages []*schema.Message, _ ...model
 	prompt := strings.ToLower(messages[len(messages)-1].Content)
 	text := "This local demo can show how a complete reply arrives. Try asking for a workshop checklist."
 	if strings.Contains(prompt, "workshop") {
-		text = "Workshop checklist\n1. Confirm the room, time and capacity.\n2. Assign a host and a check-in lead.\n3. Test the projector and materials.\n4. Draft a reminder for participants."
+		text = workshopChecklist(messages)
 	}
 	if strings.Contains(prompt, "second step") {
 		text = "I need a workshop checklist in this conversation before I can explain the second step."
