@@ -1,0 +1,5 @@
+$ go build ./...
+# campusly.local/ai01/internal/agentrun
+internal/agentrun/agentrun.go:23:38: cannot use generic type model.BaseModel[M model.messageType] without instantiation
+
+Fixed by using model.BaseChatModel (the non-generic alias for BaseModel[*schema.Message]) in NewAgent; verified against components/model/interface.go at v0.9.23.

@@ -1,0 +1,9 @@
+# campusly.local/ai01 [campusly.local/ai01.test]
+./e05_lifecycle_test.go:105:15: assignment mismatch: 2 variables but handle.Wait returns 1 value
+FAIL	campusly.local/ai01 [build failed]
+?   	campusly.local/ai01/internal/agentrun	[no test files]
+?   	campusly.local/ai01/internal/draft	[no test files]
+?   	campusly.local/ai01/internal/fakemodel	[no test files]
+?   	campusly.local/ai01/internal/fixture	[no test files]
+?   	campusly.local/ai01/internal/lookup	[no test files]
+FAIL
