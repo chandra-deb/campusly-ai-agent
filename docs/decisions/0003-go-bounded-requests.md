@@ -38,6 +38,10 @@ Before writing framework-dependent code, consult official release-compatible doc
 
 Official starting points: [Eino](https://github.com/cloudwego/eino), [Eino docs](https://www.cloudwego.io/docs/eino/), [Eino extensions and skills](https://github.com/cloudwego/eino-ext), [Eino examples](https://github.com/cloudwego/eino-examples), [Go net/http](https://pkg.go.dev/net/http), [Go context](https://pkg.go.dev/context), [Pydantic AI](https://ai.pydantic.dev/), [AgentScope](https://github.com/agentscope-ai/agentscope). Recheck availability and version applicability when executing the validation.
 
+## Delegation
+
+Follow the [AI01 validation brief](../engineering/AI01_VALIDATION_BRIEF.md). The owner or designated coding agent executes locally; the architecture/review assistant prepares the brief and reviews returned evidence. No CI workflows or environment setup by the planning assistant.
+
 ## Current evidence
 
 Planning rationale only. No framework spike, benchmark, implementation or provider call performed. AI01 remains pending; A1 and all later slices remain NOT_STARTED. Update the relevant ML report/blog with the rationale when those drafts are opened; no fabricated results.
