@@ -1,7 +1,7 @@
 # What happens when an assistant reply times out?
 
 A timeout used to leave the prompt in the composer with a generic error.
-It was hard to tell whether I should send the text again. A2 leaves the
+The generic error left the next action unclear. A2 leaves the
 prompt in the transcript with **Retry** and **Edit message**. Retry keeps
 the same turn ID. Edit returns the text to the composer so the next send
 has its own ID.
