@@ -19,3 +19,7 @@ Propose versioned request, proposal, receipt and event schemas. Include event ID
 The existing dispatcher claims outbox rows with SKIP LOCKED and records Redis publication. A durable AI consumer needs separate progress. Discuss a core-owned job record committed with the eligible event and lease/ack APIs. On timeout reclaim the lease. Retry with bounded backoff, quarantine exhausted jobs, key bot posts by source identity and return the original receipt after uncertain success. Never hold a business transaction open during inference.
 
 For later scaling, keep request handlers stateless and partition worker capacity independently of HTTP and sockets. Persist claims and receipts outside process memory, bound concurrency and share provider quotas across replicas. Compare one, two and four workers on identical synthetic arrivals, recording queue age, completion latency, quota errors, duplicates and recovery after worker loss. Formal measurement needs separate authorization.
+
+## Incremental delivery (ADR 0002)
+
+The diagram describes eventual boundaries, not A1 requirements. A1 needs only president-scoped UI, Core, AI service and model adapter with one complete non-streamed response and basic failure/loading states. Use a synthetic counterpart for standalone tests. Persistence, reads, confirmed actions and personal memory follow individual slices. Durable group handoff/worker design is reviewed before D2, not required for A1. Independent service boundaries and single-host deployment remain; no runtime, provider or queue technology is selected here.

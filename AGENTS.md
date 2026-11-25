@@ -13,3 +13,7 @@ Start with a real problem. Design and implement a solution, verify and measure i
 ## Continuous Engineering Evidence — Mandatory
 
 Product value drives the work; blogs, course reports and research papers are outputs of engineering, not reasons to add unnecessary features. Before implementation, state the problem, alternatives and relevant evidence or hypothesis. During implementation, record decisions, failures, commands, revisions and limitations. At each task or milestone, update the relevant living course-report draft and technical blog draft (or explicitly record N/A and why), alongside tests and diagrams. Preserve raw results and reproducibility; never invent personal experience or measurements. Owner reviews and revises academic submissions and approves publication separately. Protect external course deadlines and master's preparation.
+
+## Visible vertical slices — mandatory
+
+Follow the active A–E roadmap and ADR 0002. Start with the president-only personal assistant. Every user-facing slice includes a locally usable UI, integrated backend, focused checks and explicit owner accept/fix decision. Capture sanitized screenshots and feedback. Return complete responses only; no token streaming. Personal memory precedes shared group AI in the recommended order. Do not implement future infrastructure prematurely. Preserve AI01/AI17 cross-repository references.

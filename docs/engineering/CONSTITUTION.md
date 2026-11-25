@@ -15,3 +15,7 @@ Deliver the smallest useful, secure AI prototype on a single host alongside core
 ## Living evidence
 
 Engineering decisions, debugging, diagrams, tests and actual results feed incremental technical blog and Cloud/ML report drafts as work happens. The work is driven by product needs and approved engineering objectives, not by a predetermined report or paper conclusion. Every substantive task updates the relevant drafts or records an explicit N/A reason. Formal experiments freeze hypotheses, controls and scoring before measurement; papers follow only if evidence warrants them. Track owner understanding and report review independently of engineering verification.
+
+## Visible vertical slices and complete responses
+
+Develop one small user-facing capability across UI, core and AI at a time. Each slice is locally usable, tested and reviewed by the owner before acceptance. Start president-only; add authorized reads, drafts and confirmed actions in separate increments. Personal memory precedes shared group AI in the planned order; group and organization intelligence follow in smaller slices. Return whole responses, not token streams. Show loading and error states; asynchronous jobs may return complete results later. Do not defer security, deletion or safe retry behavior needed by the current slice. Technology and implementation scope need separate approval.

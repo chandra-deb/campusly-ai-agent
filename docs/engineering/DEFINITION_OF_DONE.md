@@ -7,3 +7,9 @@ Record task ID, revisions on each side, changed contract version, exact focused 
 - Record the real problem, chosen alternative, material decisions, failures, trade-offs and reproducible evidence. Update diagrams and ADRs when affected.
 - Update the technical blog draft and relevant living course-report section at each substantive task/milestone; if not applicable, record why. Keep measured claims linked to revisions, commands, configuration and raw evidence. Mark unknowns PENDING or NOT MEASURED.
 - Record owner review/teach-back separately from engineering verification. Owner verifies and revises final academic work; public publication, real-data pilot and deployment are separately authorized.
+
+## Vertical-slice acceptance
+
+- User-facing work includes a usable local UI and integrated core/API/AI behavior. Record a manual owner scenario, observed issues, fixes and explicit accept/fix status. Enabling infrastructure tasks link to their intended slice.
+- Test complete-response behavior, loading, timeout/failure handling and current-scope authorization when relevant. No streaming requirement. Required privacy, deletion and idempotency safeguards precede the capabilities that need them.
+- Capture sanitized screenshots and feedback for reports/blogs. Agent tests do not imply owner acceptance.

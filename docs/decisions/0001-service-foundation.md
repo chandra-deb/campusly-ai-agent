@@ -11,6 +11,6 @@ Accepted boundary: one public, independent AI repository (intentional portfolio 
 | State | Start with source references and minimal scoped proposal/receipt state | An AI-owned relational store could support conversations and reviewed memory. A separate database adds backup, retention and deletion coordination. Defer vector retrieval until known examples show a need. |
 | Packaging | One service image with independently runnable worker and a mock core profile | Easier to reproduce than several services per capability. Decide local commands and dependency pins with the runtime. |
 
-First review a synthetic send with a crash after posting but before acknowledgement. Agree who issues the scoped credential, persists consent, checks expiry/revocation and returns the original receipt. Approve the interface and AI10 scope before selecting libraries.
+AI01 first reviews the scoped identity, complete-response contract, synthetic fixture and A1 scope. Choose only libraries needed by that slice. Review approval/receipt and crash-after-post cases before the relevant write/group slices, and decide memory and durable job state before those capabilities. ADR 0002 supersedes the bundled sequence; the options above remain open.
 
 Primary references: [Pydantic AI](https://ai.pydantic.dev/), [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview), [Redis Streams](https://redis.io/docs/latest/develop/data-types/streams/).

@@ -1,17 +1,47 @@
-# AI work queue
+# AI work queue — small visible slices
 
-The rows below are the recommended MVP execution order, not blanket technical dependencies. Approve scope before implementation. AI01 precedes AI10; personal read/approval work (AI11–AI13) and shared event/reply work (AI14–AI15) require the applicable reviewed contracts and AI10 foundation, not necessarily each other's UI. AI16 integrates both paths; AI17 follows successful integration. Keep the MVP focused and reassess independent later increments after local acceptance; parallel work requires explicit scope and compatible interfaces. Each substantive task updates the relevant living report/blog drafts or records N/A. Integration tasks include corresponding core or UI changes reviewed in their owning repositories.
+Owner-agreed roadmap, 2026-11-25. All implementation slices are NOT_STARTED. AI01 is the pending design review. Dependencies are minimum technical prerequisites, not a rigid chain. Each slice needs explicit scope, usable local UI, focused checks, owner manual accept/fix decision and living report/blog evidence. Core/UI changes belong in their owning repositories.
 
-| ID | Deliverable | Focused check and exit |
-| --- | --- | --- |
-| AI01 | Review ADR 0001 and draft v1 API/event examples, approval lifecycle, privacy filters and worker ownership | Walk through denial, replay, edited confirmation and crash-after-post. Record owner decisions and authorized AI10 scope. |
-| AI10 | Standalone mock Campusly API, typed client, deterministic model fixture and local container entry point | Build and run from a clean checkout without secrets. Exercise allowed, wrong-tenant, revoked and unsupported-version cases. Document exact commands under scripts and put contract checks under tests. |
-| AI11 | Core scoped read adapter and organizer's private assistant entry | Select organization explicitly when ambiguous. Two actors cannot open each other's conversation. |
-| AI12 | Read one authorized activity fact with source reference | Verify correct venue, inaccessible source and abstention on missing facts. |
-| AI13 | Preview, confirm and send one message via core | Verify exact target/text and human identity, internal receipt, edit/expiry, revocation and duplicate confirmation. |
-| AI14 | Durable delivery of eligible public human messages | Mention or ASCII/fullwidth question mark qualifies. Ordinary text, private events, bot/system messages and duplicate deliveries produce zero extra inference calls. Restart before ack and recover. |
-| AI15 | Scoped group tool reads and reply/no-reply policy | Answer sourced mentions as CampuslyAI, abstain on unsupported questions, stay silent on low-value candidates. Enforce shared limits and recheck deletion before posting. |
-| AI16 | Integrated slice in owner’s local environment | Walk workshop scenario with mock then authorized provider if approved. Stop AI mid-request, verify chat send/history/reconnect, one receipt after retry and zero private metadata exposure. |
-| AI17 | Owner personally tests the §14.1 slice | Record revision, issues and explicit accept/fix decision. Only acceptance opens eligibility for separate Cloud authorization. |
+| ID | Depends on | Deliverable | Manual test and focused checks |
+| --- | --- | --- | --- |
+| AI01 | Foundation | Review runtime, model adapter, scoped identity, complete-response contract and A1 synthetic/UI path | Record alternatives and explicit A1 authorization |
+| A1 | AI01 | President-only chat UI, core integration, standalone synthetic fixture, complete model response | Open assistant and chat; deny non-president and wrong actor; clean build |
+| A2 | A1 | Loading, timeout, error and safe retry improvements (basic handling already in A1) | Simulate failure; retry without duplicate turns |
+| A3 | A1 | Private conversation persistence | Reopen chat; verify owner isolation, retention and deletion |
+| A4 | A3 | Create, rename, switch and delete conversations | Manage separate activity chats |
+| B1 | A1 | Authorized organization awareness | Ask which organizations I manage; deny unrelated or revoked access |
+| B2 | B1 | Sourced activity details, schedule, venue and status | Ask about next workshop; deny wrong tenant, abstain if missing |
+| B3 | B1 | Authorized activity statistics | Compare counts with canonical data; deny unauthorized reads |
+| B4 | B1 | Structured editable activity drafts, no official write | Describe workshop and edit fields; validate incomplete drafts |
+| B5 | B4 | Confirmed activity creation with core receipt | Create locally; reject edited, expired or revoked approvals and duplicates |
+| B6 | B2 | Editable, grounded notice drafts | Review venue-change notice and source |
+| B7 | B6 | Confirmed notice publication with human attribution | Approve notice; test exact target, replay and revocation |
+| B8 | B1 | Confirmed personal group messaging with canonical receipt | Send as president; test exact payload, replay, expiry and revocation |
+| C1 | A3 | Long conversation context management | Continue long chat; test context budget and isolation |
+| C2 | A3 | Explicit personal memory with provenance and deletion | Remember a style; test isolation and removal |
+| C3 | C2 | Relevant cross-conversation personal recall | New chat uses relevant preferences, not deleted ones |
+| C4 | C2 | Personal memory management UI | Inspect, edit and delete; verify changed behavior |
+| C5 | C2, C4 | Reviewable personal memory suggestions | Accept or reject suggestions; exclude temporary/sensitive information |
+| D1 | B1 | Group AI identity and organizer enablement | Enable/disable bot in authorized room |
+| D2 | D1 | Durable public human @mention replies; minimum retry, deduplication, limits and privacy safeguards | Mention bot; replay event; verify private/bot/system events excluded and chat survives outage |
+| D3 | D2, B2 | Grounded scoped group answers | Ask venue; verify source, abstention and live authorization |
+| D4 | D3 | Selective public question-mark participation (ASCII/fullwidth), reply/no-reply decision | Compare relevant questions, jokes and ordinary text; no extra inference for ineligible events |
+| D5 | D2 | Strengthen group AI recovery, retry, concurrency and isolation | Crash after post before ack; verify one receipt, no private leakage and chat recovery |
+| D6 | D3 | On-demand authorized group summaries without persistent group memory | Summarize public discussion; exclude private messages |
+| E1 | D1 | Organization team groups, separate rules review | Open authorized team group; test membership |
+| E2 | B8 | Needs-attention inbox with canonical links | Open item and verify source and access |
+| E3 | D6 | On-demand cross-group retrieval | Ask across authorized groups; exclude inaccessible sources |
+| E4 | D6 | Persistent attributed group memory | Inspect decision; check consent, revocation and deletion |
+| E5 | E4 | Group memory management | Correct/delete entry with scoped rights |
+| E6 | E5 | Reviewed organization knowledge | Approve promotion with source and visibility checks |
+| E7 | E6 | Activity retrospectives | Review evidence-backed lessons |
+| E8 | Separate approval | Scheduled intelligence and controlled automation; split before implementation | Review each workflow, permissions, budget, cancellation and schedule separately |
+| AI17 | B8, D4, D5 | Integrated compatibility checkpoint for original personal/group workflow | Owner tests workshop scenario, permissions, private exclusion, worker failure and canonical receipts; separate Cloud authorization |
 
-Later increments require individual decisions: combined attention inbox and reply links, multiple conversations, internal team-group rules before implementation, authorized cross-group summaries, reviewed scoped memory and retrospective promotion. Resolve consent, retention/export, hard-delete propagation, review rights and budget before any memory job. No recurring schedule is approved. External MCP/OpenCode clients can follow stable tools. Track remaining entitlement, rollout, moderation and interaction questions against spec §16.
+## Guardrails
+
+Server-side authorization, version rejection and safe logging start at A1. Before operational writes, bind approval to actor/action/target/payload, expiry and current permissions; edits need fresh approval. Before persistence, define retention and deletion; no memory grants permissions or replaces current core facts. Personal memory never enters shared AI. Private inquiries remain excluded. D2 includes minimum reliable delivery from day one; D5 strengthens it. No token streaming. No real data, provider calls, deployment, spending or recurring jobs without separate approval. Record actual tests and sanitized screenshots; update report/blog drafts or explain N/A. Split oversized later slices before implementing.
+
+## Legacy IDs
+
+AI10–AI16 are superseded, not completed: AI10 → A1; AI11 → A1/B1; AI12 → B2; AI13 → B8; AI14 → D2/D4/D5; AI15 → D3/D4; AI16 → per-slice integration and AI17. AI01 and AI17 remain for CAMS compatibility.

@@ -450,37 +450,28 @@ No automatic daily cross-group briefing is needed. Historical knowledge is used 
 
 ---
 
-## 14. Prioritization: product V1 versus later extensions
+## 14. Prioritization: owner-agreed incremental delivery (2026-11-25)
 
-> This is a **candidate delivery sequence**, not approval to implement all features together. Preserve existing messaging behavior, keep the current academic deadlines protected, and authorize each engineering milestone separately.
+The product vision remains intact. The active [milestones](../engineering/MILESTONES.md) and [task queue](../engineering/TASKS.md) supersede the earlier bundled delivery sequence. Each slice requires separate implementation authorization and owner manual acceptance.
 
-### 14.1 First interactive AI vertical slice
+### 14.1 First interactive AI vertical slice (A1)
 
-- One private personal-AI entry point for an authorized organizer.
-- Read-only activity facts through FastAPI with source-aware answers.
-- Draft and approve **one** group message, posted as the human with an action receipt.
-- Explicit `@CampuslyAI` response in an existing activity discussion.
-- Question-mark trigger plus AI reply/no-reply decision, with deduplication and rate limits.
-- End-to-end permission and private-message exclusion tests.
+- One president-only personal assistant entry and usable local chat UI.
+- Scoped core integration and complete model response, without token streaming.
+- Basic loading/failure handling, standalone synthetic fixture and positive/negative authorization checks.
+- No tool calling, group AI, persistent memory or background event queue required for A1. Conversation persistence and management follow A3/A4.
 
 ### 14.2 Next product increments
 
-- Combined organizer home / attention and reply references.
-- Multiple personal-AI conversations and conversation history.
-- Internal organization/team group product spec and implementation (independently authorized).
-- Cross-group on-demand summaries for properly authorized organizers.
-- Selective scheduled group working memory and review UI.
-- Activity retrospective and confirmed organization knowledge.
-- Carefully validated multi-group coordination and follow-ups.
+- Personal assistant: private conversation continuity, authorized organization/activity information and statistics, editable activity and notice drafts, separately confirmed creation/publication and group-message actions with receipts.
+- Personal memory: bounded context, explicit owner-controlled memory, cross-conversation retrieval, management UI and approved memory suggestions. Personal memory precedes shared group AI in the planned order.
+- Shared group AI: visible identity and enablement, explicit mentions, grounded responses, selective question-mark participation, reliability and on-demand summaries. Minimum safety and retry checks start with the first shared reply. The original combined workflow is the later AI17 compatibility checkpoint, not the first UI milestone.
 
 ### 14.3 Later possibilities
 
-- Voice interaction.
-- More comprehensive organizer actions and activity creation drafts.
-- Optional activity-specific internal coordination rooms.
-- Deeper task coordination after evidence of real demand.
-- MCP/OpenCode/external clients reusing the same scoped capability interface.
-- More sophisticated memory retrieval, clustering or model orchestration only if measurements justify them.
+- Independently scoped internal team groups, attention inbox, cross-group retrieval, group memory and review, institutional knowledge and retrospectives.
+- Scheduled intelligence and controlled automation require separate policy, consent and owner approval. No recurring schedule is approved.
+- Voice, external MCP/OpenCode clients, deeper coordination and advanced retrieval/orchestration when justified. No token streaming requirement.
 
 ---
 
@@ -540,6 +531,8 @@ These are specification refinement items, not reasons to reopen the agreed organ
 | UX-13 | Existing private inquiries excluded by default; no permission inheritance | **Required safeguard** |
 | UX-14 | MCP is not part of the initial in-product UX | **Agreed** |
 | UX-15 | Persistent internal team groups + optional activity coordination group | **Provisional hybrid structure** |
+| UX-16 | President-only initial assistant; visible end-to-end slices with UI and manual acceptance; personal memory before shared AI | **Agreed 2026-11-25** |
+| UX-17 | Complete responses only; loading/error UX, no token streaming | **Agreed 2026-11-25** |
 
 ---
 
