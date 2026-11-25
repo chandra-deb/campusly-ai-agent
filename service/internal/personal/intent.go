@@ -23,10 +23,19 @@ func resolveIntent(input Request) IntentReply {
 		"when is the next workshop", "show the next workshop", "what is the next workshop":
 		reply.Intent = "activity_details"
 	default:
-		const prefix = "show details for "
-		if strings.HasPrefix(lower, prefix) {
-			reply.Intent = "activity_details"
-			reply.Activity = strings.TrimSpace(prompt[len(prefix):])
+		for _, operation := range []struct{ prefix, intent string }{
+			{"show details for ", "activity_details"},
+			{"how many registered for ", "activity_statistics"},
+			{"how many people registered for ", "activity_statistics"},
+		} {
+			if strings.HasPrefix(lower, operation.prefix) {
+				reply.Intent = operation.intent
+				reply.Activity = strings.TrimSpace(prompt[len(operation.prefix):])
+				if strings.EqualFold(reply.Activity, "the next workshop") {
+					reply.Activity = ""
+				}
+				break
+			}
 		}
 	}
 	return reply

@@ -155,3 +155,14 @@ the schedule and activity source. See [B2 evidence](../evidence/B2.md).
 This is a controlled grounding and authorization check. We have no
 estimate of open-ended intent accuracy or performance at load. Cloud
 analysis is outside the local test. Owner review is **PENDING**.
+
+## B3 — Authorized activity statistics
+
+The assistant reports committed registration and waitlist counts from
+Core. Its snapshot uses existing individual status predicates and the
+separate team-capacity unit. The synthetic individual fixture excludes a
+withdrawal and a promoted waitlist entry. The mobile path displays an
+activity source and the same active totals. See [B3 evidence](../evidence/B3.md).
+
+The result is an aggregate grounding check. Model accuracy and Cloud
+throughput remain **NOT MEASURED**. Owner review is **PENDING**.
