@@ -78,3 +78,12 @@ and [reproduction commands](../evidence/A1.md).
 This is a transport and authorization trial with a deterministic fixture.
 Provider accuracy, latency and cost remain **NOT MEASURED**. The owner's
 accept-or-fix decision and teach-back are **PENDING**.
+
+## A2 — Timeout and retry in the personal chat
+
+The retry test checked one pending message, a synthetic HTTP 504, reuse of
+the same turn ID, and one completed response. Core validated the UUID and
+H5 checked the echoed ID before completing the turn. This is a recovery
+check for the UI and request contract. The delay was injected deliberately,
+so it cannot estimate model latency or service availability. See the
+[A2 evidence](../evidence/A2.md). Owner review and teach-back are **PENDING**.
