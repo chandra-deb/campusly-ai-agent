@@ -43,3 +43,33 @@ sequenceDiagram
 ```
 
 A1 uses net/http and context, with a deterministic fake adapter for credential-free tests. Hosted inference requires separate approval. Propagate cancellation and deadlines, bound concurrent work and retries, and validate output. Do not hold a core database transaction during inference. No personal job queue or streaming. Later group jobs use a separately designed durable asynchronous handoff; ordinary messaging never waits for AI. See [ADR 0004](../decisions/0004-personal-assistant-boundary.md) for the contract and limits.
+
+
+## A3 stored turns
+
+```mermaid
+sequenceDiagram
+  participant H as H5 assistant
+  participant C as Core
+  participant D as PostgreSQL
+  participant A as Go assistant
+  H->>C: Send in owned conversation with turn UUID
+  C->>D: Authorize and read recent turns
+  C->>D: End read transaction
+  C->>A: Signed v2 request with up to two turns
+  A-->>C: Complete scoped reply
+  C->>D: Recheck presidency and lock conversation
+  alt Matching turn already saved
+    D-->>C: Existing answer
+  else Same conversation revision
+    C->>D: Insert prompt and reply, then commit
+  else Deleted or advanced
+    C-->>H: Safe error
+  end
+  C-->>H: Canonical turn on success
+```
+
+The conversation is owned by the student within the organization. A
+database cascade removes its turns on hard delete. The Go service
+processes the signed context in memory for the duration of the call.
+See [ADR 0005](../decisions/0005-personal-conversation-retention.md).

@@ -17,7 +17,7 @@ import (
 var testKey = bytes.Repeat([]byte{'t'}, 32)
 
 func validRequest() Request {
-	return Request{1, Scope{11, 21}, time.Now().Add(time.Second).UnixMilli(), "Workshop checklist"}
+	return Request{1, Scope{11, 21}, time.Now().Add(time.Second).UnixMilli(), "Workshop checklist", nil}
 }
 
 func send(t *testing.T, handler http.Handler, input Request, signBefore func(*Request)) *httptest.ResponseRecorder {
@@ -98,5 +98,38 @@ func TestDeadlineAndMalformedOutput(t *testing.T) {
 	w = send(t, bad, validRequest(), nil)
 	if w.Code != 502 || strings.Contains(w.Body.String(), "malformed") {
 		t.Fatalf("malformed result leaked: %d %s", w.Code, w.Body)
+	}
+}
+
+func TestContextIsBoundedAndUsesSignedConversation(t *testing.T) {
+	handler := Handler(testKey, Fake{})
+	request := validRequest()
+	request.Version = 2
+	request.Prompt = "Explain the second step"
+	request.History = []Turn{{"Workshop checklist", "Workshop checklist: host and check-in lead"}}
+
+	sendContext := func(input Request) *httptest.ResponseRecorder {
+		payload, err := json.Marshal(input)
+		if err != nil {
+			t.Fatal(err)
+		}
+		r := httptest.NewRequest(http.MethodPost, ContextPath, bytes.NewReader(payload))
+		r.Header.Set(Signature, Sign(testKey, payload))
+		w := httptest.NewRecorder()
+		handler.ServeHTTP(w, r)
+		return w
+	}
+	w := sendContext(request)
+	if w.Code != 200 || !strings.Contains(w.Body.String(), "assign a host") {
+		t.Fatalf("history was not used: %d %s", w.Code, w.Body)
+	}
+	request.History = nil
+	w = sendContext(request)
+	if w.Code != 200 || !strings.Contains(w.Body.String(), "I need a workshop checklist") {
+		t.Fatalf("context leaked between calls: %d %s", w.Code, w.Body)
+	}
+	request.History = make([]Turn, maxHistory+1)
+	if w = sendContext(request); w.Code != 400 {
+		t.Fatalf("too many turns: %d", w.Code)
 	}
 }
