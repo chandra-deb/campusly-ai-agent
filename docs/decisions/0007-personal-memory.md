@@ -57,3 +57,17 @@ serializes saves for a workspace. Retrying the same choice returns
 its existing entry, and a different choice cannot overwrite it
 through the create path. The deletion URL uses the saved entry's ID
 so replay cannot erase a new entry created later under the same kind.
+
+C3 applies saved preferences to the supported workshop checklist
+requests that leave reply style open. Version 5 of the Go reply
+contract carries only the supported kind/value pairs. Go maps
+them to fixed style text for its model adapter. Conversation text,
+sources and database identifiers never appear in the style fields.
+Campusly intent handling continues to read current Core data without
+personal memory.
+
+The role lock is released before generation. Before saving a new
+styled reply, Core reacquires it and compares the current choices
+to those sent. A changed or deleted preference discards the late
+result. Earlier replies remain in the private transcript and can
+be removed by deleting their conversation.

@@ -19,7 +19,7 @@ Owner-agreed roadmap, 2026-11-25. A1–A4 and B1–B8 have local evidence and ar
 | B8 | B1 | [B8 evidence](../evidence/B8.md) · Confirmed personal group messaging with canonical receipt | Send as president; test exact payload, replay, expiry and revocation |
 | C1 | A3 | [C1 evidence](../evidence/C1.md) · Long conversation context management | Continue long chat; test context budget and isolation |
 | C2 | A3 | [C2 evidence](../evidence/C2.md) · Explicit personal memory with provenance and deletion | Remember a style; test isolation and removal |
-| C3 | C2 | Relevant cross-conversation personal recall | New chat uses relevant preferences, not deleted ones |
+| C3 | C2 | [C3 evidence](../evidence/C3.md) · Relevant cross-conversation personal recall | New chat uses relevant preferences, not deleted ones |
 | C4 | C2 | Personal memory management UI | Inspect, edit and delete; verify changed behavior |
 | C5 | C2, C4 | Reviewable personal memory suggestions | Accept or reject suggestions; exclude temporary/sensitive information |
 | D1 | B1 | Group AI identity and organizer enablement | Enable/disable bot in authorized room |

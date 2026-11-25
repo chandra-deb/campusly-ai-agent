@@ -257,3 +257,19 @@ The synthetic checks cover save replay, unsupported inputs, a second
 workspace, role succession and removal. This evidence concerns data
 ownership and lifecycle. Model quality and Cloud behavior remain
 **NOT MEASURED**. Owner review is pending. [C2 evidence](../evidence/C2.md).
+
+## C3 — Use of relevant preferences across conversations
+
+Core sends the scoped, typed choices for supported checklist requests
+through signed reply v5. The Go adapter translates supported values
+into fixed style instructions. The deterministic model makes format,
+detail and tone changes observable. Other intents keep their prior
+authorization and data paths. Core compares the selected choices
+again before committing a styled reply.
+
+The synthetic checks exercise a second chat, a separate organization,
+an unrelated prompt and deletion during inference. A late result
+using a removed preference is discarded. This is evidence about
+selection, authorization and handling a concurrent change. Open-ended
+relevance, hosted generation and Cloud behavior remain **NOT MEASURED**.
+Owner review is pending. [C3 evidence](../evidence/C3.md).
