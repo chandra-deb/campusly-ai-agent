@@ -121,3 +121,9 @@ The confirmation path does not call Go. Receipts contain the actor,
 organization, action ID, target and keyed payload fingerprint. Deleting
 a private chat removes its transcript. The operational audit stays with
 Core and is scoped to the actor and organization.
+
+B7 uses the same confirmation path for official notices. The payload
+names the canonical discussion and Core checks membership and president
+capability before committing the public notice, its outbox events and
+the receipt. Manual discussion paths use the default transaction
+behavior. H5 opens the confirmed post by its message ID.

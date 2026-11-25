@@ -201,3 +201,16 @@ message was written by the draft request. See [B6 evidence](../evidence/B6.md).
 This tests provenance for a deterministic template. Hosted drafting
 quality and Cloud behavior remain **NOT MEASURED**. Owner review is
 **PENDING**.
+
+## B7 — Confirmed official notices
+
+The confirmed action goes through the canonical discussion service and
+uses the approving president's sender record. The synthetic checks
+rejected changed text, room and activity IDs, and rejected a replay
+after revocation. The successful replay returned the original notice.
+The mobile path opened that exact message via its receipt.
+See [B7 evidence](../evidence/B7.md).
+
+This is a local authorization and attribution check over REST.
+Realtime delivery and Cloud behavior remain **NOT MEASURED**.
+Owner review is **PENDING**.

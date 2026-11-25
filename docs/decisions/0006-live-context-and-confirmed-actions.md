@@ -63,3 +63,11 @@ the activity. This is preferable to passing the activity's discussion
 through the model, since the schedule owns the facts and the discussion
 may include private inquiries. Expect the draft to link to the activity
 and leave the timeline unchanged.
+
+B7 sends the approved notice through the existing discussion service.
+The review binds the real room ID as well as the activity ID and text.
+Core checks membership and the president capability, and keeps the
+discussion service's room-before-role lock order. The message,
+announcement event and assistance receipt commit in one transaction.
+The sender is the approving president. We expect a wrong room, an
+edited notice or a revoked role to leave the public timeline unchanged.
