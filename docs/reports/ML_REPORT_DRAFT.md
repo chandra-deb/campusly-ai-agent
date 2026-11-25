@@ -273,3 +273,16 @@ using a removed preference is discarded. This is evidence about
 selection, authorization and handling a concurrent change. Open-ended
 relevance, hosted generation and Cloud behavior remain **NOT MEASURED**.
 Owner review is pending. [C3 evidence](../evidence/C3.md).
+
+## C4 — Inspecting, editing and removing saved preferences
+
+The memory panel shows provenance and the last update. Core matches an
+edit to the owner, workspace, entry and last-seen timestamp. It keeps
+the original source across edits and rejects an older panel's change.
+
+The synthetic browser prompts show concise, expanded and default
+replies as the owner edits and removes the preference. The focused
+API check covers wrong scope, an invalid kind change, a stale edit
+and a request after deletion. This verifies the control path. Hosted
+style fidelity and Cloud behavior remain **NOT MEASURED**. Owner
+review is pending. [C4 evidence](../evidence/C4.md).
