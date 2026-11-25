@@ -178,3 +178,15 @@ See [B4 evidence](../evidence/B4.md) for the mobile edit and test commands.
 The checks exercise synthetic proposal shape and usability. Hosted
 draft quality and Cloud behavior remain **NOT MEASURED**. Owner review is
 **PENDING**.
+
+## B5 — Confirmed activity creation and replay
+
+The main failure case was a lost confirmation response after committing
+the activity. Core now commits the activity, discussion and receipt
+together. The scoped confirmation tests show that edited, expired and
+revoked approvals cannot create new records. Repeating the same confirmed
+action returned its original ID. An injected SQL failure left no
+activity or receipt. See [B5 evidence](../evidence/B5.md).
+
+This is a synthetic application integrity check. Cloud failure recovery,
+load and model accuracy remain **NOT MEASURED**. Owner review is **PENDING**.

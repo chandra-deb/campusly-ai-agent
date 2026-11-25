@@ -1,6 +1,6 @@
 # AI work queue — small visible slices
 
-Owner-agreed roadmap, 2026-11-25. A1–A4 and B1–B4 have local evidence and are pending owner acceptance. AI01 is tested and owner-reviewed, with narrow Eino adoption decided. Dependencies are minimum technical prerequisites, not a rigid chain. Each slice needs explicit scope, usable local UI, focused checks, owner manual accept/fix decision and living report/blog evidence. Core/UI changes belong in their owning repositories.
+Owner-agreed roadmap, 2026-11-25. A1–A4 and B1–B5 have local evidence and are pending owner acceptance. AI01 is tested and owner-reviewed, with narrow Eino adoption decided. Dependencies are minimum technical prerequisites, not a rigid chain. Each slice needs explicit scope, usable local UI, focused checks, owner manual accept/fix decision and living report/blog evidence. Core/UI changes belong in their owning repositories.
 
 | ID | Depends on | Deliverable | Manual test and focused checks |
 | --- | --- | --- | --- |
@@ -13,7 +13,7 @@ Owner-agreed roadmap, 2026-11-25. A1–A4 and B1–B4 have local evidence and ar
 | B2 | B1 | [B2 evidence](../evidence/B2.md) · Sourced activity details, schedule, venue and status | Ask about next workshop; deny wrong tenant, abstain if missing |
 | B3 | B1 | [B3 evidence](../evidence/B3.md) · Authorized activity statistics | Compare counts with canonical data; deny unauthorized reads |
 | B4 | B1 | [B4 evidence](../evidence/B4.md) · Structured editable activity drafts, no official write | Describe workshop and edit fields; validate incomplete drafts |
-| B5 | B4 | Confirmed activity creation with core receipt | Create locally; reject edited, expired or revoked approvals and duplicates |
+| B5 | B4 | [B5 evidence](../evidence/B5.md) · Confirmed activity creation with core receipt | Create locally; reject edited, expired or revoked approvals and duplicates |
 | B6 | B2 | Editable, grounded notice drafts | Review venue-change notice and source |
 | B7 | B6 | Confirmed notice publication with human attribution | Approve notice; test exact target, replay and revocation |
 | B8 | B1 | Confirmed personal group messaging with canonical receipt | Send as president; test exact payload, replay, expiry and revocation |

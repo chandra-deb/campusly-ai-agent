@@ -10,7 +10,7 @@
 | D — Shared group AI | D1–D6 | Identity, mentions, grounding, selective replies, reliability, summaries |
 | E — Organization intelligence | E1–E8 | Later provisional increments, refined before implementation |
 
-See [TASKS.md](TASKS.md) for each slice and test. AI01 is tested and owner-reviewed; narrow Eino adoption is decided. A1–A4 are implemented and locally tested. The owner accept-or-fix decisions are pending. [Review Phase A](../evidence/A4.md). [B1](../evidence/B1.md), [B2](../evidence/B2.md) [B3](../evidence/B3.md) and [B4](../evidence/B4.md) are locally tested and ready for owner review. B5–B8, phases C–E and AI17 are NOT_STARTED.
+See [TASKS.md](TASKS.md) for each slice and test. AI01 is tested and owner-reviewed; narrow Eino adoption is decided. A1–A4 are implemented and locally tested. The owner accept-or-fix decisions are pending. [Review Phase A](../evidence/A4.md). [B1–B5](TASKS.md) are locally tested and ready for owner review. B6–B8, phases C–E and AI17 are NOT_STARTED.
 
 Each user-facing slice delivers UI, core/API and AI together, focused checks and owner manual accept/fix before completion. Small infrastructure tasks may support a named slice. Use loading and error states, not token streaming; asynchronous jobs may return complete results later. Recommended order A → B → C → D → E; personal memory precedes shared AI, but may start before all B tools are done. Technical prerequisites govern independent work. Initial internal prototype after A; a useful president assistant can be separately released after selected B slices. Owner acceptance and separate rollout authorization required for every release. Single host with independent service boundaries first.
 

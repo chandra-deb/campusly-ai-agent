@@ -95,3 +95,29 @@ uses the existing v2 model exchange. Campusly source cards disappear when
 the user switches chats or reloads the transcript. Core rebuilds the answer
 on the next question using the then-current authorization. Go receives no
 organization rows and has no credentials to query Core.
+
+## B5 confirmed activity creation
+
+```mermaid
+sequenceDiagram
+  participant H as H5 president chat
+  participant C as Core
+  participant D as PostgreSQL
+  H->>C: Review action ID and exact draft fields
+  C->>C: Check current presidency and chat ownership
+  C-->>H: Exact preview and expiring signed approval
+  H->>C: Confirm the same action ID, draft and approval
+  C->>C: Recheck scope and verify approval
+  C->>D: Check for a receipt under the president lock
+  alt New and unexpired
+    C->>D: Commit draft activity, discussion and receipt together
+  else Same action already committed
+    C->>D: Read the original receipt
+  end
+  C-->>H: Canonical activity receipt
+```
+
+The confirmation path does not call Go. Receipts contain the actor,
+organization, action ID, target and keyed payload fingerprint. Deleting
+a private chat removes its transcript. The operational audit stays with
+Core and is scoped to the actor and organization.
