@@ -39,3 +39,27 @@ fields stay visible in H5 so the president can fill them in. The
 alternative of encoding a creation command in free-form text would
 mix drafting and authorization. Expect edits and incomplete drafts
 to leave the activity database unchanged.
+
+B5 adds a separate Core review and confirm path for activity creation.
+The review returns the exact proposed action and a short-lived signed
+token bound to the actor, workspace, conversation, action ID and payload.
+A token can only be used after live authorization and ownership checks.
+The activity, its discussion and the receipt share one transaction.
+Core returns the original receipt when the same authorized request
+is repeated after a lost response. A changed payload or an expired
+unused token needs a fresh review.
+
+An in-memory receipt would lose the action after a restart, while a
+receipt written after the business commit leaves a gap where retry can
+create another activity. Expect the database to contain one activity,
+one discussion and one receipt after a replay, and none after a failed
+transaction. The receipt stores identifiers and a keyed payload
+fingerprint. It does not store the draft text or the private conversation.
+
+B6 drafts a notice from the next scheduled session's recorded time and
+venue. It describes the recorded venue without inferring that the venue
+changed. When the source has no venue, Core asks the president to update
+the activity. This is preferable to passing the activity's discussion
+through the model, since the schedule owns the facts and the discussion
+may include private inquiries. Expect the draft to link to the activity
+and leave the timeline unchanged.
