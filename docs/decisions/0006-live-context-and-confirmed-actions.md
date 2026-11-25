@@ -18,3 +18,10 @@ Expect the same question to reflect a changed role on the next request.
 Verify with two managed organizations, an unrelated organization, and
 a revoked role. The deterministic local adapter tests product behavior,
 with language coverage limited to the supported sample requests.
+
+B2 keeps the same boundary for activity questions. A named lookup matches
+within the selected organization. For “next workshop,” Core uses the next
+real scheduled session and falls back to the activity start only when
+there are no sessions. The alternative of picking the first title match
+would make ambiguous results look reliable. Expect missing or ambiguous
+records to produce a clear answer without a guessed venue or date.

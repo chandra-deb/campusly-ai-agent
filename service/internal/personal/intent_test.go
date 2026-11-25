@@ -34,3 +34,22 @@ func TestSignedIntent(t *testing.T) {
 		t.Fatalf("invalid signature returned %d", invalid.Code)
 	}
 }
+
+func TestActivityDetailsIntent(t *testing.T) {
+	for _, tc := range []struct {
+		prompt   string
+		intent   string
+		activity string
+	}{
+		{"When and where is the next workshop?", "activity_details", ""},
+		{"Show details for Sample Workshop", "activity_details", "Sample Workshop"},
+		{"Give me a workshop checklist", "chat", ""},
+	} {
+		input := validRequest()
+		input.Prompt = tc.prompt
+		result := resolveIntent(input)
+		if result.Intent != tc.intent || result.Activity != tc.activity {
+			t.Errorf("%q yielded %+v", tc.prompt, result)
+		}
+	}
+}
