@@ -244,3 +244,16 @@ turns. Separate checks cover a fresh conversation and multibyte text.
 These demonstrate context selection and isolation, while hosted
 answer quality, token counts and Cloud behavior remain **NOT
 MEASURED**. Owner review is pending. [C1 evidence](../evidence/C1.md).
+
+## C2 — Explicit storage of reply preferences
+
+A president saves one supported value per kind in the selected
+organization. Core records the owner, choice and timestamps and
+hard-deletes it on removal. The application and database allow only
+the supported combinations. Preference provenance is manual at this
+stage. This is the storage and control path for C3 recall.
+
+The synthetic checks cover save replay, unsupported inputs, a second
+workspace, role succession and removal. This evidence concerns data
+ownership and lifecycle. Model quality and Cloud behavior remain
+**NOT MEASURED**. Owner review is pending. [C2 evidence](../evidence/C2.md).
