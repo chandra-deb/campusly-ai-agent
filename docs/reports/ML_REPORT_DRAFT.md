@@ -1,12 +1,12 @@
 # Living ML/AI engineering report — draft
 
-**Status:** Draft for owner review. AI01 evidence was reviewed by the owner on 2026-11-25; narrow Eino adoption decided. Nothing here is published.
+**Status:** Draft for owner review. AI01 evidence was reviewed by the owner on 2026-11-25; narrow Eino adoption decided. Phase A engineering evidence is ready for owner review.
 **Date:** 2026-11-25.
 **Scope:** This repository owns the AI engineering evidence and this living report. Campusly core owns its own Cloud report and real-data work. See [LEARNING_WORKFLOW](../engineering/LEARNING_WORKFLOW.md) and [DEFINITION_OF_DONE](../engineering/DEFINITION_OF_DONE.md).
 
 ## Why this report exists
 
-Campusly needs a small, permission-bound assistant, not a general autonomous agent. The question for AI01 was practical: can Eino help build the Go service without adding machinery we do not need, or is a plain Go adapter enough for the first slice? Product direction and the A–E roadmap are agreed; narrow Eino adoption is decided, while A1 scope is not.
+Campusly needs a small, permission-bound assistant, not a general autonomous agent. The question for AI01 was practical: can Eino help build the Go service without adding machinery we do not need, or is a plain Go adapter enough for the first slice? The owner approved narrow Eino adoption after the isolated check, then approved local implementation of Phase A.
 
 This report records evidence as work happens. Claims are labelled PROPOSED, TESTED, OWNER_DECIDED or NOT MEASURED. Owner review and revision of any academic submission happen separately.
 
@@ -59,11 +59,11 @@ Owner decision (2026-11-25, OWNER_DECIDED): **narrow adoption** — keep Eino fo
 - Retry tests cover model errors, not uncertain writes or idempotency. Eino's wider ADK surface (middleware, checkpoints, multi-agent, TurnLoop) was not exercised.
 - Public docs can drift from a pinned tag; two compile errors came from exactly that. Pin source was the tie-breaker.
 
-### Proposed A1 boundary (not authorized)
+### A1 questions at the close of AI01
 
 President-only personal chat with one complete non-streamed response; deterministic fake adapter for tests; hosted adapter behind the same interface only after approval; scoped actor/organization on every request; explicit deadline, retry cap, tool iteration cap and safe error text; no persistence, no tool writes, no group AI and no queue. Open questions: exact model adapter and vendor, contract versioning, identity propagation from Core, error/timeout wording, and final numeric limits. See [TASKS.md](../engineering/TASKS.md) A1; AI01 does not authorize it.
 
-**Owner review status:** evidence reviewed on 2026-11-25; narrow Eino adoption decided. A1 authorization, adapter/vendor, contracts and limits remain open.
+**Owner review status at that point:** evidence reviewed on 2026-11-25 and narrow Eino adoption chosen. The following sections record the subsequent Phase A implementation.
 
 ## A1 — A complete assistant reply from the president dashboard
 
@@ -94,11 +94,26 @@ The president can reopen a transcript. Core is responsible for the
 stored history, and Go receives the two latest turns as typed model
 messages. The fixture's answer to “Can you explain the second step?”
 depends on a preceding workshop checklist. That is a controlled
-demonstration of context transport and isolation. It says nothing about
-the quality of a hosted model's reasoning. See the
+demonstration of context transport and isolation. Hosted-model reasoning
+quality remains unmeasured. See the
 [retention and context decision](../decisions/0005-personal-conversation-retention.md).
 
 The synthetic prototype retains conversations until the owner deletes
 them. Core's tests exercise its owner predicate, turn-ID reuse and
 cascade deletion. A real-data policy for backups and third-party model
 transfer is **PENDING**, as are the owner's review and teach-back.
+
+## A4 — Managing and switching conversations
+
+The personal assistant can keep several private transcripts in one
+organization. Renaming changes metadata, and deleting affects only the
+selected conversation. The H5 organization selector replaces the
+transcript instead of mixing activity planning across workspaces.
+Core's tests check owner isolation on list, rename and delete, plus the
+conversation cap. The UI scenario and evidence are linked in
+[A4 local evidence](../evidence/A4.md).
+
+Phase A establishes the product path and permission boundaries that
+later evaluations can use. Grounding, abstention, quality differences
+between models, latency and cost remain unmeasured. Owner acceptance
+and review of the draft remain **PENDING**.
