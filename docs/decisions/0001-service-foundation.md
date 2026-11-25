@@ -1,6 +1,6 @@
 # 0001 — Repository boundary and first design discussion
 
-Accepted boundary: one private, independent AI repository, versioned contracts and a reproducible synthetic integration. No dependency on private backend imports. The options below are proposed.
+Accepted boundary: one public, independent AI repository (intentional portfolio and product demonstration; private core source and sensitive information stay outside), versioned contracts and a reproducible synthetic integration. No dependency on private backend imports. The options below are proposed.
 
 | Choice | Starting proposal | Trade-off and decision test |
 | --- | --- | --- |
