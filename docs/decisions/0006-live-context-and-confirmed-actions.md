@@ -25,3 +25,10 @@ real scheduled session and falls back to the activity start only when
 there are no sessions. The alternative of picking the first title match
 would make ambiguous results look reliable. Expect missing or ambiguous
 records to produce a clear answer without a guessed venue or date.
+
+B3 uses the same activity lookup and source for statistics. Core reads
+the committed registration and queue rows at a single statement snapshot.
+For team activities, it gives team counts separately from registered
+people. The alternative of sending participant lists to Go would disclose
+unneeded fields. Confirm that status exclusions match the activity
+service and that another organization's counts are absent.

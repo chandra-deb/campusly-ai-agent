@@ -43,6 +43,8 @@ func TestActivityDetailsIntent(t *testing.T) {
 	}{
 		{"When and where is the next workshop?", "activity_details", ""},
 		{"Show details for Sample Workshop", "activity_details", "Sample Workshop"},
+		{"How many registered for Sample Workshop?", "activity_statistics", "Sample Workshop"},
+		{"How many people registered for the next workshop?", "activity_statistics", ""},
 		{"Give me a workshop checklist", "chat", ""},
 	} {
 		input := validRequest()
