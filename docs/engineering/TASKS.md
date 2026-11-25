@@ -1,6 +1,6 @@
 # AI work queue — small visible slices
 
-Owner-agreed roadmap, 2026-11-25. A1–A4 and B1–B8 have local evidence and are pending owner acceptance. AI01 is tested and owner-reviewed, with narrow Eino adoption decided. Dependencies are minimum technical prerequisites, not a rigid chain. Each slice needs explicit scope, usable local UI, focused checks, owner manual accept/fix decision and living report/blog evidence. Core/UI changes belong in their owning repositories.
+Owner-agreed roadmap, 2026-11-25; real-model gate adopted 2026-11-26. A1–A4, B1–B8 and C1–C5 have deterministic local evidence; real-model and owner acceptance remain pending. AI01 is tested and owner-reviewed, with narrow Eino adoption decided. Dependencies are minimum technical prerequisites, not a rigid chain. Each slice needs explicit scope, usable local UI, focused checks, owner manual accept/fix decision and living report/blog evidence. Core/UI changes belong in their owning repositories.
 
 | ID | Depends on | Deliverable | Manual test and focused checks |
 | --- | --- | --- | --- |
@@ -22,7 +22,11 @@ Owner-agreed roadmap, 2026-11-25. A1–A4 and B1–B8 have local evidence and ar
 | C3 | C2 | [C3 evidence](../evidence/C3.md) · Relevant cross-conversation personal recall | New chat uses relevant preferences, not deleted ones |
 | C4 | C2 | [C4 evidence](../evidence/C4.md) · Personal memory management UI | Inspect, edit and delete; verify changed behavior |
 | C5 | C2, C4 | [C5 evidence](../evidence/C5.md) · Reviewable personal memory suggestions | Accept or reject suggestions; exclude temporary/sensitive information |
-| D1 | B1 | Group AI identity and organizer enablement | Enable/disable bot in authorized room |
+| R1 | A1–C5 deterministic evidence | Configurable hosted model adapter; retain fake mode; validate provider compatibility and bounded complete responses | Real chat with paraphrases, failures, timeout/cancellation, history, provider/model and usage evidence; no silent fake fallback |
+| R2 | R1 | Connect all existing Phase B capabilities to real orchestration: managed organizations, activity details/statistics, activity/notice/message drafts and confirmed creation/publication/send | Typed calls, real local dummy DB results, multi-tool follow-ups, missing/ambiguous targets, invalid arguments, wrong scope/revocation, exact UI confirmation and replay; no direct model-authorized writes |
+| R3 | R2 | Connect A/C conversation and memory behavior to real inference: history, bounded context, scoped preference list/save/edit/delete, relevant recall, suggestions and acceptance | Natural paraphrases, new chat recall, removal and source deletion, isolation and fresh consent; no permissions from memory |
+| R4 | R3 | Integrated real-model acceptance of all A1–C5 on compatible AI/Core/H5 revisions using owner's existing local dummy-data database | Cover every capability; compare to canonical data, inspect tool traces, record outcomes/limitations, run focused deterministic regressions, owner manual accept/fix; D1 blocked until accepted |
+| D1 | B1, R4 owner accepted | Group AI identity and organizer enablement | Enable/disable bot in authorized room |
 | D2 | D1 | Durable public human @mention replies; minimum retry, deduplication, limits and privacy safeguards | Mention bot; replay event; verify private/bot/system events excluded and chat survives outage |
 | D3 | D2, B2 | Grounded scoped group answers | Ask venue; verify source, abstention and live authorization |
 | D4 | D3 | Selective public question-mark participation (ASCII/fullwidth), reply/no-reply decision | Compare relevant questions, jokes and ordinary text; no extra inference for ineligible events |
@@ -39,6 +43,8 @@ Owner-agreed roadmap, 2026-11-25. A1–A4 and B1–B8 have local evidence and ar
 | AI17 | B8, D4, D5 | Integrated compatibility checkpoint for original personal/group workflow | Owner tests workshop scenario, permissions, private exclusion, worker failure and canonical receipts; separate Cloud authorization |
 
 ## Guardrails
+
+Every future AI phase follows deterministic checks → real LLM/tool calls → local integrated tests → owner acceptance. Test all introduced capabilities, not only reads. Native tool calls are typed model API requests; drafts, context and UI confirmation may use structured output or application logic rather than separate registered tools. Local dummy-data use is approved for manual tests; keep production, secrets and unapproved real data out. R1–R4 are the next work, not completed tasks. See [constitution](CONSTITUTION.md).
 
 Server-side authorization, version rejection and safe logging start at A1. Before operational writes, bind approval to actor/action/target/payload, expiry and current permissions; edits need fresh approval. Before persistence, define retention and deletion; no memory grants permissions or replaces current core facts. Personal memory never enters shared AI. Private inquiries remain excluded. D2 includes minimum reliable delivery from day one; D5 strengthens it. No token streaming. No real data, provider calls, deployment, spending or recurring jobs without separate approval. Record actual tests and sanitized screenshots; update report/blog drafts or explain N/A. Split oversized later slices before implementing.
 
