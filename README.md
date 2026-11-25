@@ -4,7 +4,7 @@ Campus organizers need to check activity details, draft messages and follow up i
 
 ## Getting started
 
-Start with the [product specification](docs/specs/CAMPUSLY_AI_PRODUCT_UX_SPEC_v1.0.md), [architecture](docs/engineering/ARCHITECTURE.md) and [active milestones](docs/engineering/MILESTONES.md). Walk through the [synthetic scenario](examples/workshop.md) without credentials or a core checkout. The Phase A branches include the first president-only H5 assistant, with complete replies, scoped history and conversation controls. The disposable local lab uses a PostgreSQL container and runs H5, Core and Go as loopback processes. Personal memory is planned before shared group AI.
+Start with the [product specification](docs/specs/CAMPUSLY_AI_PRODUCT_UX_SPEC_v1.0.md), [architecture](docs/engineering/ARCHITECTURE.md) and [active milestones](docs/engineering/MILESTONES.md). Walk through the [synthetic scenario](examples/workshop.md) without credentials or a core checkout. The Phase A branches include the first president-only H5 assistant, with complete replies, scoped history and conversation controls. The disposable local lab uses a PostgreSQL container and runs H5, Core and Go as loopback processes. The [Phase C review guide](docs/evidence/PHASE_C.md) walks through the locally tested personal memory slices.
 
 ## Technical direction
 
@@ -46,3 +46,9 @@ CAMS_ENV_FILE=/dev/null python -m scripts.m2.assistant_lab \
 
 Use [the slice evidence](docs/evidence/A4.md) for owner review scenarios
 and automated verification commands.
+
+### Review Phase B locally
+
+Use the matching local branches in AI, CAMS Core and H5. The
+[Phase B review guide](docs/evidence/PHASE_B.md) lists the branches,
+synthetic lab command, owner scenarios and captured verification for B1–B8.

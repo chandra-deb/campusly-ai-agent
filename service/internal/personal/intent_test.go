@@ -43,6 +43,10 @@ func TestActivityDetailsIntent(t *testing.T) {
 	}{
 		{"When and where is the next workshop?", "activity_details", ""},
 		{"Show details for Sample Workshop", "activity_details", "Sample Workshop"},
+		{"How many registered for Sample Workshop?", "activity_statistics", "Sample Workshop"},
+		{"How many people registered for the next workshop?", "activity_statistics", ""},
+		{"Draft a venue-change notice for Sample Workshop", "notice_draft", "Sample Workshop"},
+		{"Draft a notice for the next workshop", "notice_draft", ""},
 		{"Give me a workshop checklist", "chat", ""},
 	} {
 		input := validRequest()
@@ -51,5 +55,37 @@ func TestActivityDetailsIntent(t *testing.T) {
 		if result.Intent != tc.intent || result.Activity != tc.activity {
 			t.Errorf("%q yielded %+v", tc.prompt, result)
 		}
+	}
+}
+
+func TestActivityDraftProposal(t *testing.T) {
+	input := validRequest()
+	input.Prompt = "Draft an activity: Intro to Python | Practice loops | 30"
+	result := resolveIntent(input)
+	if result.Intent != "activity_draft" || result.Draft == nil ||
+		*result.Draft != (ActivityDraft{"activity", "Intro to Python", "Practice loops", "WORKSHOP", "30"}) {
+		t.Fatalf("unexpected activity proposal: %+v", result.Draft)
+	}
+	input.Prompt = "Draft a workshop"
+	if draft := resolveIntent(input).Draft; draft == nil || draft.Title != "" || draft.Capacity != "" {
+		t.Fatalf("missing fields should remain editable: %+v", draft)
+	}
+	input.Prompt = "Draft an activity called Intro to Python for 30 people"
+	if draft := resolveIntent(input).Draft; draft == nil || draft.Title != "Intro to Python" || draft.Capacity != "30" {
+		t.Fatalf("unexpected natural-language proposal: %+v", draft)
+	}
+}
+
+func TestGroupMessageKeepsExactTextForReview(t *testing.T) {
+	input := validRequest()
+	input.Prompt = "Send a group message to Python Workshop: Can you bring a laptop? Thanks!"
+	result := resolveIntent(input)
+	if result.Intent != "message_draft" || result.Activity != "Python Workshop" ||
+		result.Message != "Can you bring a laptop? Thanks!" {
+		t.Fatalf("unexpected message proposal: %+v", result)
+	}
+	input.Prompt = "Draft a message for Python Workshop: Can you bring a laptop?"
+	if result := resolveIntent(input); result.Message != "Can you bring a laptop?" {
+		t.Fatalf("message punctuation was changed: %+v", result)
 	}
 }

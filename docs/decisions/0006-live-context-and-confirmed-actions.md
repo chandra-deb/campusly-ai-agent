@@ -25,3 +25,58 @@ real scheduled session and falls back to the activity start only when
 there are no sessions. The alternative of picking the first title match
 would make ambiguous results look reliable. Expect missing or ambiguous
 records to produce a clear answer without a guessed venue or date.
+
+B3 uses the same activity lookup and source for statistics. Core reads
+the committed registration and queue rows at a single statement snapshot.
+For team activities, it gives team counts separately from registered
+people. The alternative of sending participant lists to Go would disclose
+unneeded fields. Confirm that status exclusions match the activity
+service and that another organization's counts are absent.
+
+B4 returns an editable activity proposal with a title, description,
+type and capacity. Core validates the response shape, and incomplete
+fields stay visible in H5 so the president can fill them in. The
+alternative of encoding a creation command in free-form text would
+mix drafting and authorization. Expect edits and incomplete drafts
+to leave the activity database unchanged.
+
+B5 adds a separate Core review and confirm path for activity creation.
+The review returns the exact proposed action and a short-lived signed
+token bound to the actor, workspace, conversation, action ID and payload.
+A token can only be used after live authorization and ownership checks.
+The activity, its discussion and the receipt share one transaction.
+Core returns the original receipt when the same authorized request
+is repeated after a lost response. A changed payload or an expired
+unused token needs a fresh review.
+
+An in-memory receipt would lose the action after a restart, while a
+receipt written after the business commit leaves a gap where retry can
+create another activity. Expect the database to contain one activity,
+one discussion and one receipt after a replay, and none after a failed
+transaction. The receipt stores identifiers and a keyed payload
+fingerprint. It does not store the draft text or the private conversation.
+
+B6 drafts a notice from the next scheduled session's recorded time and
+venue. It describes the recorded venue without inferring that the venue
+changed. When the source has no venue, Core asks the president to update
+the activity. This is preferable to passing the activity's discussion
+through the model, since the schedule owns the facts and the discussion
+may include private inquiries. Expect the draft to link to the activity
+and leave the timeline unchanged.
+
+B7 sends the approved notice through the existing discussion service.
+The review binds the real room ID as well as the activity ID and text.
+Core checks membership and the president capability, and keeps the
+discussion service's room-before-role lock order. The message,
+announcement event and assistance receipt commit in one transaction.
+The sender is the approving president. We expect a wrong room, an
+edited notice or a revoked role to leave the public timeline unchanged.
+
+B8 adds an ordinary group message to the confirmation flow. The local
+resolver keeps the text supplied by the president and gives Core the
+named activity. An explicit review separates a request to draft or send
+from the confirmed write. Reusing the discussion service avoids copying
+its membership, attribution, rate limits and event rules. The same
+recipient checks apply to notices and messages, while only a notice
+creates an announcement event. Expect exact replay to post once and
+expired or revoked confirmations to leave the room unchanged.

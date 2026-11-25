@@ -155,3 +155,151 @@ the schedule and activity source. See [B2 evidence](../evidence/B2.md).
 This is a controlled grounding and authorization check. We have no
 estimate of open-ended intent accuracy or performance at load. Cloud
 analysis is outside the local test. Owner review is **PENDING**.
+
+## B3 — Authorized activity statistics
+
+The assistant reports committed registration and waitlist counts from
+Core. Its snapshot uses existing individual status predicates and the
+separate team-capacity unit. The synthetic individual fixture excludes a
+withdrawal and a promoted waitlist entry. The mobile path displays an
+activity source and the same active totals. See [B3 evidence](../evidence/B3.md).
+
+The result is an aggregate grounding check. Model accuracy and Cloud
+throughput remain **NOT MEASURED**. Owner review is **PENDING**.
+
+## B4 — Editable activity proposals
+
+A typed proposal makes missing fields visible and gives the president a
+place to correct them. The Go fixture supplies bounded fields, Core
+validates their shape, and H5 validates the editable title and capacity.
+The synthetic database check found zero activities created by drafting.
+See [B4 evidence](../evidence/B4.md) for the mobile edit and test commands.
+
+The checks exercise synthetic proposal shape and usability. Hosted
+draft quality and Cloud behavior remain **NOT MEASURED**. Owner review is
+**PENDING**.
+
+## B5 — Confirmed activity creation and replay
+
+The main failure case was a lost confirmation response after committing
+the activity. Core now commits the activity, discussion and receipt
+together. The scoped confirmation tests show that edited, expired and
+revoked approvals cannot create new records. Repeating the same confirmed
+action returned its original ID. An injected SQL failure left no
+activity or receipt. See [B5 evidence](../evidence/B5.md).
+
+This is a synthetic application integrity check. Cloud failure recovery,
+load and model accuracy remain **NOT MEASURED**. Owner review is **PENDING**.
+
+## B6 — Grounded notice drafts
+
+A notice is composed from the authorized activity and first future
+scheduled session. The test checked the source fields, edited the draft
+in H5, and demonstrated abstention after the venue was removed. No
+message was written by the draft request. See [B6 evidence](../evidence/B6.md).
+
+This tests provenance for a deterministic template. Hosted drafting
+quality and Cloud behavior remain **NOT MEASURED**. Owner review is
+**PENDING**.
+
+## B7 — Confirmed official notices
+
+The confirmed action goes through the canonical discussion service and
+uses the approving president's sender record. The synthetic checks
+rejected changed text, room and activity IDs, and rejected a replay
+after revocation. The successful replay returned the original notice.
+The mobile path opened that exact message via its receipt.
+See [B7 evidence](../evidence/B7.md).
+
+This is a local authorization and attribution check over REST.
+Realtime delivery and Cloud behavior remain **NOT MEASURED**.
+Owner review is **PENDING**.
+
+## B8 — Confirmed ordinary group messages
+
+The assistant keeps the president's supplied group-message text and
+resolves the named discussion through Core. The test checked that
+punctuation survives drafting, wrong targets and stale approvals
+cannot post, and exact replay returns the same result. The committed
+message kept the president's identity in the existing room. It created
+a message outbox event, while the B7 notice path also creates an
+announcement event. See the [final slice evidence](../evidence/B8.md).
+
+The complete local B1–B8 scenario uses a deterministic resolver and
+synthetic data. Hosted language coverage, Cloud throughput and
+production rollout remain outside the evidence. The owner has a
+[review guide](../evidence/PHASE_B.md). Owner acceptance and report
+review are **PENDING**.
+
+## C1 — Recent context in long private chats
+
+The first local assistant sent two earlier exchanges. C1 takes a
+contiguous suffix of up to eight whole turns with a 12,000-byte budget
+that includes the current prompt. The signed v4 reply boundary repeats
+the checks. Reading the full transcript still retrieves the saved
+turns from Core.
+
+The synthetic scenario asks about a checklist after several unrelated
+turns. Separate checks cover a fresh conversation and multibyte text.
+These demonstrate context selection and isolation, while hosted
+answer quality, token counts and Cloud behavior remain **NOT
+MEASURED**. Owner review is pending. [C1 evidence](../evidence/C1.md).
+
+## C2 — Explicit storage of reply preferences
+
+A president saves one supported value per kind in the selected
+organization. Core records the owner, choice and timestamps and
+hard-deletes it on removal. The application and database allow only
+the supported combinations. Preference provenance is manual at this
+stage. This is the storage and control path for C3 recall.
+
+The synthetic checks cover save replay, unsupported inputs, a second
+workspace, role succession and removal. This evidence concerns data
+ownership and lifecycle. Model quality and Cloud behavior remain
+**NOT MEASURED**. Owner review is pending. [C2 evidence](../evidence/C2.md).
+
+## C3 — Use of relevant preferences across conversations
+
+Core sends the scoped, typed choices for supported checklist requests
+through signed reply v5. The Go adapter translates supported values
+into fixed style instructions. The deterministic model makes format,
+detail and tone changes observable. Other intents keep their prior
+authorization and data paths. Core compares the selected choices
+again before committing a styled reply.
+
+The synthetic checks exercise a second chat, a separate organization,
+an unrelated prompt and deletion during inference. A late result
+using a removed preference is discarded. This is evidence about
+selection, authorization and handling a concurrent change. Open-ended
+relevance, hosted generation and Cloud behavior remain **NOT MEASURED**.
+Owner review is pending. [C3 evidence](../evidence/C3.md).
+
+## C4 — Inspecting, editing and removing saved preferences
+
+The memory panel shows provenance and the last update. Core matches an
+edit to the owner, workspace, entry and last-seen timestamp. It keeps
+the original source across edits and rejects an older panel's change.
+
+The synthetic browser prompts show concise, expanded and default
+replies as the owner edits and removes the preference. The focused
+API check covers wrong scope, an invalid kind change, a stale edit
+and a request after deletion. This verifies the control path. Hosted
+style fidelity and Cloud behavior remain **NOT MEASURED**. Owner
+review is pending. [C4 evidence](../evidence/C4.md).
+
+## C5 — Owner-reviewed suggestions with source erasure
+
+The president selects a saved message and reviews a supported
+preference suggested from its text. The local parser checks
+whole-message matches. Preview and dismissal leave storage unchanged.
+Acceptance rechecks the source and saves the typed choice with its
+turn reference. PostgreSQL erases the linked preference when the
+source conversation is deleted, including a choice the owner edited
+after accepting. Independently saved choices remain.
+
+Synthetic cases cover an accepted lasting preference, dismissal,
+temporary wording, sensitive text, wrong scope and source deletion.
+These cases test the supported policy and its persistence behavior.
+Broader language coverage, recall quality for a hosted model, and
+Cloud behavior remain **NOT MEASURED**. Owner review is pending.
+[C5 evidence](../evidence/C5.md).

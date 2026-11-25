@@ -95,3 +95,99 @@ uses the existing v2 model exchange. Campusly source cards disappear when
 the user switches chats or reloads the transcript. Core rebuilds the answer
 on the next question using the then-current authorization. Go receives no
 organization rows and has no credentials to query Core.
+
+## B5 confirmed activity creation
+
+```mermaid
+sequenceDiagram
+  participant H as H5 president chat
+  participant C as Core
+  participant D as PostgreSQL
+  H->>C: Review action ID and exact draft fields
+  C->>C: Check current presidency and chat ownership
+  C-->>H: Exact preview and expiring signed approval
+  H->>C: Confirm the same action ID, draft and approval
+  C->>C: Recheck scope and verify approval
+  C->>D: Check for a receipt under the president lock
+  alt New and unexpired
+    C->>D: Commit draft activity, discussion and receipt together
+  else Same action already committed
+    C->>D: Read the original receipt
+  end
+  C-->>H: Canonical activity receipt
+```
+
+The confirmation path does not call Go. Receipts contain the actor,
+organization, action ID, target and keyed payload fingerprint. Deleting
+a private chat removes its transcript. The operational audit stays with
+Core and is scoped to the actor and organization.
+
+B7 uses the same confirmation path for official notices. The payload
+names the canonical discussion and Core checks membership and president
+capability before committing the public notice, its outbox events and
+the receipt. Manual discussion paths use the default transaction
+behavior. H5 opens the confirmed post by its message ID.
+
+B8 uses that same room and receipt path for a public text message.
+It sends the president's approved text through the existing chat
+service and creates only its ordinary message event. Private
+inquiries stay in the discussion's existing private composer.
+
+## C1 recent context
+
+Core reads a bounded suffix of whole turns from the owned transcript
+and releases its read transaction before inference. The signed v4
+reply contract checks the number of turns and UTF-8 text size again in
+Go. The full saved transcript stays in Core. See
+[ADR 0007](../decisions/0007-personal-memory.md).
+
+## C2–C3 personal preferences
+
+```mermaid
+sequenceDiagram
+  participant H as H5 assistant
+  participant C as Core
+  participant D as PostgreSQL
+  participant A as Go assistant
+  H->>C: Save a supported reply preference
+  C->>D: Recheck presidency and save for owner and organization
+  H->>C: Ask for a workshop checklist in another chat
+  C->>D: Read current preferences in the selected scope
+  C->>A: Signed v5 reply request with approved style values
+  A-->>C: Complete reply
+  C->>D: Recheck presidency, conversation and preferences
+  alt Preferences still match
+    C-->>H: Saved reply
+  else Preference removed or changed
+    C-->>H: Retry with current choices
+  end
+```
+
+The intent request for live Campusly reads carries the prompt only.
+Using or editing a preference does not confer access to any activity or
+discussion. See [ADR 0007](../decisions/0007-personal-memory.md).
+
+## C5 suggestions and source deletion
+
+```mermaid
+sequenceDiagram
+  participant H as H5 assistant
+  participant C as Core
+  participant D as PostgreSQL
+  H->>C: Ask for a suggestion from a selected message
+  C->>D: Verify active presidency and read the owned turn
+  C-->>H: Supported choice or no suggestion
+  alt Owner saves choice
+    H->>C: Accept exact choice for the same turn
+    C->>D: Recheck scope and save with the source turn reference
+    C-->>H: Saved preference and source link
+  else Owner dismisses
+    H->>H: Close the review
+  end
+  H->>C: Delete source conversation
+  C->>D: Delete chat and cascade from turns to linked preferences
+```
+
+The suggestion path stays in Core. It needs neither a provider
+request nor a job. Independently saved choices remain separate from
+the transcript's lifecycle.
