@@ -1,0 +1,86 @@
+=== RUN   TestE01CompleteResponse
+--- PASS: TestE01CompleteResponse (0.00s)
+=== RUN   TestE02RepeatedInputsAreScripted
+--- PASS: TestE02RepeatedInputsAreScripted (0.00s)
+=== RUN   TestE02TransientRetryStaysWithinCap
+--- PASS: TestE02TransientRetryStaysWithinCap (0.00s)
+=== RUN   TestE02PermanentErrorDoesNotRetry
+--- PASS: TestE02PermanentErrorDoesNotRetry (0.00s)
+=== RUN   TestE02NoCredentialsNeeded
+--- PASS: TestE02NoCredentialsNeeded (0.00s)
+=== RUN   TestE03ToolArgumentSchema
+--- PASS: TestE03ToolArgumentSchema (0.00s)
+=== RUN   TestE03AgentUsesToolAndCorrelatesCall
+    e03_tool_test.go:75: agent events: 3
+    e03_tool_test.go:76: event 0: role=assistant output=&{MessageOutput:0xc0000bef50 CustomizedOutput:<nil>} content="" err=<nil>
+    e03_tool_test.go:76: event 1: role=tool output=&{MessageOutput:0xc0000bf0e0 CustomizedOutput:<nil>} content="{\"id\":\"north-workshop\",\"title\":\"Intro to Python\",\"venue\":\"Room 12\",\"source\":\"synthetic:north:activity-1\",\"organization\":\"north\"}" err=<nil>
+    e03_tool_test.go:76: event 2: role=assistant output=&{MessageOutput:0xc0000bf270 CustomizedOutput:<nil>} content="Room 12 — Intro to Python (north)." err=<nil>
+--- PASS: TestE03AgentUsesToolAndCorrelatesCall (0.00s)
+=== RUN   TestE03RejectsBadArgumentsAndScopes
+=== RUN   TestE03RejectsBadArgumentsAndScopes/malformed_JSON
+=== RUN   TestE03RejectsBadArgumentsAndScopes/missing_actor
+=== RUN   TestE03RejectsBadArgumentsAndScopes/unknown_field
+=== RUN   TestE03RejectsBadArgumentsAndScopes/wrong_type
+=== RUN   TestE03RejectsBadArgumentsAndScopes/unknown_id
+=== RUN   TestE03RejectsBadArgumentsAndScopes/malformed_id
+=== RUN   TestE03RejectsBadArgumentsAndScopes/wrong_tenant
+=== RUN   TestE03RejectsBadArgumentsAndScopes/unauthorized_actor
+=== RUN   TestE03RejectsBadArgumentsAndScopes/unauthorized_org
+--- PASS: TestE03RejectsBadArgumentsAndScopes (0.00s)
+    --- PASS: TestE03RejectsBadArgumentsAndScopes/malformed_JSON (0.00s)
+    --- PASS: TestE03RejectsBadArgumentsAndScopes/missing_actor (0.00s)
+    --- PASS: TestE03RejectsBadArgumentsAndScopes/unknown_field (0.00s)
+    --- PASS: TestE03RejectsBadArgumentsAndScopes/wrong_type (0.00s)
+    --- PASS: TestE03RejectsBadArgumentsAndScopes/unknown_id (0.00s)
+    --- PASS: TestE03RejectsBadArgumentsAndScopes/malformed_id (0.00s)
+    --- PASS: TestE03RejectsBadArgumentsAndScopes/wrong_tenant (0.00s)
+    --- PASS: TestE03RejectsBadArgumentsAndScopes/unauthorized_actor (0.00s)
+    --- PASS: TestE03RejectsBadArgumentsAndScopes/unauthorized_org (0.00s)
+=== RUN   TestE03RepeatedToolCallsStopAtIterationCap
+    e03_tool_test.go:175: bounded loop stopped after 3 model attempts: [NodeRunError] run node[ChatModel] pre processor fail: exceeds max iterations
+        ------------------------
+        node path: [node_1, ChatModel]
+--- PASS: TestE03RepeatedToolCallsStopAtIterationCap (0.00s)
+=== RUN   TestE04FrameworkSchemaDescribesDraftOnly
+--- PASS: TestE04FrameworkSchemaDescribesDraftOnly (0.00s)
+=== RUN   TestE04ValidDraft
+--- PASS: TestE04ValidDraft (0.00s)
+=== RUN   TestE04RejectsMalformedDrafts
+=== RUN   TestE04RejectsMalformedDrafts/malformed_JSON
+=== RUN   TestE04RejectsMalformedDrafts/missing_title
+=== RUN   TestE04RejectsMalformedDrafts/missing_capacity
+=== RUN   TestE04RejectsMalformedDrafts/wrong_capacity_type
+=== RUN   TestE04RejectsMalformedDrafts/zero_capacity
+=== RUN   TestE04RejectsMalformedDrafts/negative_capacity
+=== RUN   TestE04RejectsMalformedDrafts/capacity_above_bound
+=== RUN   TestE04RejectsMalformedDrafts/blank_title
+=== RUN   TestE04RejectsMalformedDrafts/unexpected_action_field
+=== RUN   TestE04RejectsMalformedDrafts/trailing_JSON
+--- PASS: TestE04RejectsMalformedDrafts (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/malformed_JSON (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/missing_title (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/missing_capacity (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/wrong_capacity_type (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/zero_capacity (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/negative_capacity (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/capacity_above_bound (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/blank_title (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/unexpected_action_field (0.00s)
+    --- PASS: TestE04RejectsMalformedDrafts/trailing_JSON (0.00s)
+=== RUN   TestE04DraftNeverWritesAnything
+--- PASS: TestE04DraftNeverWritesAnything (0.00s)
+=== RUN   TestE05ConcurrentRequestsStayIsolated
+--- PASS: TestE05ConcurrentRequestsStayIsolated (0.01s)
+=== RUN   TestE05DeadlineReturnsSafeError
+--- PASS: TestE05DeadlineReturnsSafeError (0.03s)
+=== RUN   TestE05ExplicitCancelStopsRun
+--- PASS: TestE05ExplicitCancelStopsRun (0.00s)
+=== RUN   TestE05BoundedRetryUnderConcurrency
+--- PASS: TestE05BoundedRetryUnderConcurrency (0.00s)
+PASS
+ok  	campusly.local/ai01	(cached)
+?   	campusly.local/ai01/internal/agentrun	[no test files]
+?   	campusly.local/ai01/internal/draft	[no test files]
+?   	campusly.local/ai01/internal/fakemodel	[no test files]
+?   	campusly.local/ai01/internal/fixture	[no test files]
+?   	campusly.local/ai01/internal/lookup	[no test files]
