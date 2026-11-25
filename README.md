@@ -8,7 +8,7 @@ Start with the [product specification](docs/specs/CAMPUSLY_AI_PRODUCT_UX_SPEC_v1
 
 ## Technical direction
 
-Go is the selected production AI service language, with standard-library HTTP initially and complete, bounded personal requests. AI01 validated Eino locally and the owner chose narrow adoption for the model/tool/agent boundary; the dependency stays scoped to the AI service and a hard lock awaits a separately approved adapter check. The Phase A lab uses a deterministic model adapter. Python remains useful for offline ML evaluation. Shared group processing will be asynchronous and independent of normal messaging. See [ADR 0003](docs/decisions/0003-go-bounded-requests.md) for rationale, validation plan and guardrails.
+Go is the selected production AI service language, with standard-library HTTP initially and complete, bounded personal requests. AI01 validated Eino locally and the owner chose narrow adoption for the model/tool/agent boundary; the dependency stays scoped to the AI service and a hard lock awaits a separately approved adapter check. The Phase A lab uses a deterministic model adapter. R1 selects Eino's OpenAI-compatible component (`github.com/cloudwego/eino-ext/components/model/openai`) for direct configurable Chat Completions endpoints, with no LiteLLM gateway. Dependency and native tool-call compatibility must be verified before real-model acceptance. Python remains useful for offline ML evaluation. Shared group processing will be asynchronous and independent of normal messaging. See [ADR 0003](docs/decisions/0003-go-bounded-requests.md) for rationale, validation plan and guardrails.
 
 ## Current next milestone
 
