@@ -166,3 +166,15 @@ activity source and the same active totals. See [B3 evidence](../evidence/B3.md)
 
 The result is an aggregate grounding check. Model accuracy and Cloud
 throughput remain **NOT MEASURED**. Owner review is **PENDING**.
+
+## B4 — Editable activity proposals
+
+A typed proposal makes missing fields visible and gives the president a
+place to correct them. The Go fixture supplies bounded fields, Core
+validates their shape, and H5 validates the editable title and capacity.
+The synthetic database check found zero activities created by drafting.
+See [B4 evidence](../evidence/B4.md) for the mobile edit and test commands.
+
+The checks exercise synthetic proposal shape and usability. Hosted
+draft quality and Cloud behavior remain **NOT MEASURED**. Owner review is
+**PENDING**.
