@@ -414,6 +414,12 @@ No automatic daily cross-group briefing is needed. Historical knowledge is used 
 
 ---
 
+### 12.3 Live tool activity in personal chat (agreed 2026-11-26)
+
+In the personal assistant, show actual tool activity as it happens: a human-readable operation label, running/succeeded/failed state, and measured duration. After the final answer, collapse the activity into an expandable per-turn summary (tool-call count and elapsed time). Include repeated calls as separate executions. No fabricated progress, raw model reasoning, secrets, or unfiltered arguments/results; optional developer diagnostics must be separately gated and sanitized. Tool-event streaming over authenticated SSE is distinct from token streaming: deliver the final assistant response as one complete message. Preserve Core authorization, scoped conversation ownership, cancellation, deadlines and exact human confirmation for writes. R1 introduces the event contract and a harmless fixture; R2–R3 connect the existing business and memory tool calls; R4 verifies the integrated H5 experience with the local dummy database.
+
+Use a loading state when no tool is running; show clear failure/interruption rather than leaving a spinner indefinitely. A draft is not a committed write. Show a successful official action only after Core returns its canonical receipt following the existing confirmation flow. The collapsed summary belongs to the turn, remains available on reopening the conversation, and follows transcript deletion. Show no tool activity for a plain reply with no calls. UI acceptance covers multi-call, failure, cancellation and switching conversations.
+
 ## 13. Canonical user journeys and acceptance scenarios
 
 ### Journey A — Send, receive, understand, follow up
@@ -533,6 +539,7 @@ These are specification refinement items, not reasons to reopen the agreed organ
 | UX-15 | Persistent internal team groups + optional activity coordination group | **Provisional hybrid structure** |
 | UX-16 | President-only initial assistant; visible end-to-end slices with UI and manual acceptance; personal memory before shared AI | **Agreed 2026-11-25** |
 | UX-17 | Complete responses only; loading/error UX, no token streaming | **Agreed 2026-11-25** |
+| UX-18 | Live SSE tool activity, status/duration and expandable per-turn summary; complete final reply | **Agreed 2026-11-26** |
 
 ---
 
