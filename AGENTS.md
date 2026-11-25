@@ -20,6 +20,8 @@ Follow the active A–E roadmap and ADR 0002. Start with the president-only pers
 
 ## Runtime and verified framework usage — mandatory
 
+For Eino/Go AI work, use the repo-owned [eino-local skill](.agents/skills/eino-local/SKILL.md). It records the pinned version and the APIs actually validated in AI01; verify against pinned source before coding. Upstream Eino docs and skills are optional orientation only.
+
 Read [ADR 0003](docs/decisions/0003-go-bounded-requests.md). Production AI is Go with standard-library HTTP initially; Eino is pending validation, not a dependency approval. Python is available for offline evaluation. Personal requests are bounded synchronous HTTP with complete responses, propagated cancellation and deadlines; no streaming or initial personal-job queue. Shared group inference later is durable and asynchronous, never on the normal messaging path. Before writing framework-dependent code, consult official release-specific docs/examples and relevant maintainer skills, verify APIs against pinned source, record versions and links, then run formatting, build, focused tests and vet (race checks where appropriate). Do not guess APIs or claim correctness merely from compiling. AI01 evaluation and A1 implementation require separate authorization; no paid provider calls or real data without approval.
 
 ## Role boundaries
