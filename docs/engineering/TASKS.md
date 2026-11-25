@@ -1,6 +1,6 @@
 # AI work queue — small visible slices
 
-Owner-agreed roadmap, 2026-11-25. A1–A4 and B1 have local evidence and are pending owner acceptance. AI01 is tested and owner-reviewed, with narrow Eino adoption decided. Dependencies are minimum technical prerequisites, not a rigid chain. Each slice needs explicit scope, usable local UI, focused checks, owner manual accept/fix decision and living report/blog evidence. Core/UI changes belong in their owning repositories.
+Owner-agreed roadmap, 2026-11-25. A1–A4 and B1–B2 have local evidence and are pending owner acceptance. AI01 is tested and owner-reviewed, with narrow Eino adoption decided. Dependencies are minimum technical prerequisites, not a rigid chain. Each slice needs explicit scope, usable local UI, focused checks, owner manual accept/fix decision and living report/blog evidence. Core/UI changes belong in their owning repositories.
 
 | ID | Depends on | Deliverable | Manual test and focused checks |
 | --- | --- | --- | --- |
@@ -10,7 +10,7 @@ Owner-agreed roadmap, 2026-11-25. A1–A4 and B1 have local evidence and are pen
 | A3 | A1 | [A3 evidence](../evidence/A3.md) · Private conversation persistence | Reopen chat; verify owner isolation, retention and deletion |
 | A4 | A3 | [A4 evidence](../evidence/A4.md) · Create, rename, switch and delete conversations | Manage separate activity chats |
 | B1 | A1 | [B1 evidence](../evidence/B1.md) · Authorized organization awareness | Ask which organizations I manage; deny unrelated or revoked access |
-| B2 | B1 | Sourced activity details, schedule, venue and status | Ask about next workshop; deny wrong tenant, abstain if missing |
+| B2 | B1 | [B2 evidence](../evidence/B2.md) · Sourced activity details, schedule, venue and status | Ask about next workshop; deny wrong tenant, abstain if missing |
 | B3 | B1 | Authorized activity statistics | Compare counts with canonical data; deny unauthorized reads |
 | B4 | B1 | Structured editable activity drafts, no official write | Describe workshop and edit fields; validate incomplete drafts |
 | B5 | B4 | Confirmed activity creation with core receipt | Create locally; reject edited, expired or revoked approvals and duplicates |

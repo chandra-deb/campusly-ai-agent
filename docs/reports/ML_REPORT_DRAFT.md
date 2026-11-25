@@ -142,3 +142,16 @@ supported prompts. Language coverage and hosted-model grounding remain
 **NOT MEASURED**. The Cloud report is outside this single-host local
 functional check. See the [decision](../decisions/0006-live-context-and-confirmed-actions.md)
 and [B1 evidence](../evidence/B1.md). Owner review is **PENDING**.
+
+## B2 — Sourced activity details and abstention
+
+The local route separates activity intent from data selection. Core
+selects the next scheduled workshop or an exact title within the current
+organization. The synthetic checks found the correct venue despite an
+earlier foreign workshop and a cancelled session. Missing venues and
+ambiguous titles did not yield guessed facts. The mobile answer showed
+the schedule and activity source. See [B2 evidence](../evidence/B2.md).
+
+This is a controlled grounding and authorization check. We have no
+estimate of open-ended intent accuracy or performance at load. Cloud
+analysis is outside the local test. Owner review is **PENDING**.
