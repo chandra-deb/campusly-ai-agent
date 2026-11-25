@@ -64,3 +64,17 @@ Owner decision (2026-11-25, OWNER_DECIDED): **narrow adoption** — keep Eino fo
 President-only personal chat with one complete non-streamed response; deterministic fake adapter for tests; hosted adapter behind the same interface only after approval; scoped actor/organization on every request; explicit deadline, retry cap, tool iteration cap and safe error text; no persistence, no tool writes, no group AI and no queue. Open questions: exact model adapter and vendor, contract versioning, identity propagation from Core, error/timeout wording, and final numeric limits. See [TASKS.md](../engineering/TASKS.md) A1; AI01 does not authorize it.
 
 **Owner review status:** evidence reviewed on 2026-11-25; narrow Eino adoption decided. A1 authorization, adapter/vendor, contracts and limits remain open.
+
+## A1 — A complete assistant reply from the president dashboard
+
+A1 uses Go HTTP and the provisional Eino v0.9.23 model interface. The adapter
+takes a typed user message and returns one typed assistant message. H5, Core
+and Go use a synthetic workshop prompt to check request routing, scoped
+authorization and complete-response handling. Core's focused checks passed
+for positive access, a forged actor, missing presidency, wrong organization
+and the disabled feature. See the [decision](../decisions/0004-personal-assistant-boundary.md)
+and [reproduction commands](../evidence/A1.md).
+
+This is a transport and authorization trial with a deterministic fixture.
+Provider accuracy, latency and cost remain **NOT MEASURED**. The owner's
+accept-or-fix decision and teach-back are **PENDING**.
