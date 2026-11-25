@@ -230,3 +230,30 @@ synthetic data. Hosted language coverage, Cloud throughput and
 production rollout remain outside the evidence. The owner has a
 [review guide](../evidence/PHASE_B.md). Owner acceptance and report
 review are **PENDING**.
+
+## C1 — Recent context in long private chats
+
+The first local assistant sent two earlier exchanges. C1 takes a
+contiguous suffix of up to eight whole turns with a 12,000-byte budget
+that includes the current prompt. The signed v4 reply boundary repeats
+the checks. Reading the full transcript still retrieves the saved
+turns from Core.
+
+The synthetic scenario asks about a checklist after several unrelated
+turns. Separate checks cover a fresh conversation and multibyte text.
+These demonstrate context selection and isolation, while hosted
+answer quality, token counts and Cloud behavior remain **NOT
+MEASURED**. Owner review is pending. [C1 evidence](../evidence/C1.md).
+
+## C2 — Explicit storage of reply preferences
+
+A president saves one supported value per kind in the selected
+organization. Core records the owner, choice and timestamps and
+hard-deletes it on removal. The application and database allow only
+the supported combinations. Preference provenance is manual at this
+stage. This is the storage and control path for C3 recall.
+
+The synthetic checks cover save replay, unsupported inputs, a second
+workspace, role succession and removal. This evidence concerns data
+ownership and lifecycle. Model quality and Cloud behavior remain
+**NOT MEASURED**. Owner review is pending. [C2 evidence](../evidence/C2.md).

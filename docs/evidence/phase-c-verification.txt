@@ -1,0 +1,9 @@
+C1 · Go race tests: ok campusly.local/assistant/internal/personal 1.106s
+C1 · Core focused assistant tests: 21 passed in 70.29s
+C1 · H5: vue-tsc and Uni H5 build exited 0
+C1 · Browser: PASS: bounded context recalls an older turn in the same conversation
+C1 · Browser: PASS: create, rename, switch, organization isolation and targeted delete
+C2 · Core preference tests: 1 passed in 10.78s
+C2 · H5 initial vue-tsc exited 2 on a line break before a type assertion
+C2 · H5 rerun: vue-tsc and Uni H5 build exited 0
+C2 · Browser rerun: PASS: explicit memory is durable, workspace-scoped and removable

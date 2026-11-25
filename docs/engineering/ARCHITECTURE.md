@@ -132,3 +132,11 @@ B8 uses that same room and receipt path for a public text message.
 It sends the president's approved text through the existing chat
 service and creates only its ordinary message event. Private
 inquiries stay in the discussion's existing private composer.
+
+## C1 recent context
+
+Core reads a bounded suffix of whole turns from the owned transcript
+and releases its read transaction before inference. The signed v4
+reply contract checks the number of turns and UTF-8 text size again in
+Go. The full saved transcript stays in Core. See
+[ADR 0007](../decisions/0007-personal-memory.md).
