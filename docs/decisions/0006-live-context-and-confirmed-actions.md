@@ -32,3 +32,10 @@ For team activities, it gives team counts separately from registered
 people. The alternative of sending participant lists to Go would disclose
 unneeded fields. Confirm that status exclusions match the activity
 service and that another organization's counts are absent.
+
+B4 returns an editable activity proposal with a title, description,
+type and capacity. Core validates the response shape, and incomplete
+fields stay visible in H5 so the president can fill them in. The
+alternative of encoding a creation command in free-form text would
+mix drafting and authorization. Expect edits and incomplete drafts
+to leave the activity database unchanged.

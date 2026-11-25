@@ -55,3 +55,21 @@ func TestActivityDetailsIntent(t *testing.T) {
 		}
 	}
 }
+
+func TestActivityDraftProposal(t *testing.T) {
+	input := validRequest()
+	input.Prompt = "Draft an activity: Intro to Python | Practice loops | 30"
+	result := resolveIntent(input)
+	if result.Intent != "activity_draft" || result.Draft == nil ||
+		*result.Draft != (ActivityDraft{"activity", "Intro to Python", "Practice loops", "WORKSHOP", "30"}) {
+		t.Fatalf("unexpected activity proposal: %+v", result.Draft)
+	}
+	input.Prompt = "Draft a workshop"
+	if draft := resolveIntent(input).Draft; draft == nil || draft.Title != "" || draft.Capacity != "" {
+		t.Fatalf("missing fields should remain editable: %+v", draft)
+	}
+	input.Prompt = "Draft an activity called Intro to Python for 30 people"
+	if draft := resolveIntent(input).Draft; draft == nil || draft.Title != "Intro to Python" || draft.Capacity != "30" {
+		t.Fatalf("unexpected natural-language proposal: %+v", draft)
+	}
+}

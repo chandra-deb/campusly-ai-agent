@@ -7,12 +7,17 @@ import "strings"
 type IntentReply struct {
 	Version int `json:"version"`
 	Scope
-	Intent   string `json:"intent"`
-	Activity string `json:"activity,omitempty"`
+	Intent   string         `json:"intent"`
+	Activity string         `json:"activity,omitempty"`
+	Draft    *ActivityDraft `json:"draft,omitempty"`
 }
 
 func resolveIntent(input Request) IntentReply {
 	reply := IntentReply{Version: input.Version, Scope: input.Scope, Intent: "chat"}
+	if draft := proposeActivity(input.Prompt); draft != nil {
+		reply.Intent, reply.Draft = "activity_draft", draft
+		return reply
+	}
 	prompt := strings.TrimSpace(strings.TrimRight(strings.TrimSpace(input.Prompt), "?？"))
 	lower := strings.ToLower(prompt)
 	switch strings.TrimRight(lower, ".!") {
