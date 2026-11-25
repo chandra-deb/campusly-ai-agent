@@ -21,7 +21,7 @@ Owner-agreed roadmap, 2026-11-25. A1–A4 and B1–B8 have local evidence and ar
 | C2 | A3 | [C2 evidence](../evidence/C2.md) · Explicit personal memory with provenance and deletion | Remember a style; test isolation and removal |
 | C3 | C2 | [C3 evidence](../evidence/C3.md) · Relevant cross-conversation personal recall | New chat uses relevant preferences, not deleted ones |
 | C4 | C2 | [C4 evidence](../evidence/C4.md) · Personal memory management UI | Inspect, edit and delete; verify changed behavior |
-| C5 | C2, C4 | Reviewable personal memory suggestions | Accept or reject suggestions; exclude temporary/sensitive information |
+| C5 | C2, C4 | [C5 evidence](../evidence/C5.md) · Reviewable personal memory suggestions | Accept or reject suggestions; exclude temporary/sensitive information |
 | D1 | B1 | Group AI identity and organizer enablement | Enable/disable bot in authorized room |
 | D2 | D1 | Durable public human @mention replies; minimum retry, deduplication, limits and privacy safeguards | Mention bot; replay event; verify private/bot/system events excluded and chat survives outage |
 | D3 | D2, B2 | Grounded scoped group answers | Ask venue; verify source, abstention and live authorization |

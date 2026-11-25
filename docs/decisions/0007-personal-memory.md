@@ -77,3 +77,19 @@ value. Core checks the last-seen update timestamp while holding the
 presidency lock. A stale edit asks the owner to load the current
 choice. A delete acts on the exact preference ID and cannot revive a
 previous version.
+
+C5 reads only the selected saved user message in the owned
+conversation. Core recognizes a short list of exact lasting
+preferences, such as “I always prefer bullet points.” The preview is
+read-only. When the owner accepts, Core rereads the source and
+requires the submitted choice to match it. An existing manual
+preference keeps its provenance and a conflicting choice needs
+an edit in Personal memory.
+
+The saved row references the source turn by its conversation and
+turn IDs. Deleting the source chat deletes the linked preference
+through PostgreSQL, including when its value was edited later. The
+stored preference contains the supported choice and source IDs.
+Manual entries have no source turn, and dismissal leaves no row.
+Downgrading C5 removes source-linked preferences before dropping the
+link columns so their retention rule cannot be lost.

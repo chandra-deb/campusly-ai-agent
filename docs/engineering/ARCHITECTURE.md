@@ -166,3 +166,28 @@ sequenceDiagram
 The intent request for live Campusly reads carries the prompt only.
 Using or editing a preference does not confer access to any activity or
 discussion. See [ADR 0007](../decisions/0007-personal-memory.md).
+
+## C5 suggestions and source deletion
+
+```mermaid
+sequenceDiagram
+  participant H as H5 assistant
+  participant C as Core
+  participant D as PostgreSQL
+  H->>C: Ask for a suggestion from a selected message
+  C->>D: Verify active presidency and read the owned turn
+  C-->>H: Supported choice or no suggestion
+  alt Owner saves choice
+    H->>C: Accept exact choice for the same turn
+    C->>D: Recheck scope and save with the source turn reference
+    C-->>H: Saved preference and source link
+  else Owner dismisses
+    H->>H: Close the review
+  end
+  H->>C: Delete source conversation
+  C->>D: Delete chat and cascade from turns to linked preferences
+```
+
+The suggestion path stays in Core. It needs neither a provider
+request nor a job. Independently saved choices remain separate from
+the transcript's lifecycle.

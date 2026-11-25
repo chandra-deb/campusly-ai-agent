@@ -286,3 +286,20 @@ API check covers wrong scope, an invalid kind change, a stale edit
 and a request after deletion. This verifies the control path. Hosted
 style fidelity and Cloud behavior remain **NOT MEASURED**. Owner
 review is pending. [C4 evidence](../evidence/C4.md).
+
+## C5 — Owner-reviewed suggestions with source erasure
+
+The president selects a saved message and reviews a supported
+preference suggested from its text. The local parser checks
+whole-message matches. Preview and dismissal leave storage unchanged.
+Acceptance rechecks the source and saves the typed choice with its
+turn reference. PostgreSQL erases the linked preference when the
+source conversation is deleted, including a choice the owner edited
+after accepting. Independently saved choices remain.
+
+Synthetic cases cover an accepted lasting preference, dismissal,
+temporary wording, sensitive text, wrong scope and source deletion.
+These cases test the supported policy and its persistence behavior.
+Broader language coverage, recall quality for a hosted model, and
+Cloud behavior remain **NOT MEASURED**. Owner review is pending.
+[C5 evidence](../evidence/C5.md).
