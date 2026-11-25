@@ -1,6 +1,6 @@
 # 0003 — Go for the AI service, bounded requests first
 
-**Date:** 2026-11-25. **Status:** Accepted language and initial execution direction; Eino is the leading candidate, pending AI01 validation. No implementation, provider spending, or deployment authorized.
+**Date:** 2026-11-25. **Status:** Accepted language and initial execution direction; Eino narrowly adopted by the owner for the model/tool/agent boundary, pending A1 authorization. No implementation, provider spending, or deployment authorized.
 
 ## Context and alternatives
 
@@ -11,9 +11,9 @@ Considered Go with Eino or custom orchestration, Python with AgentScope or Pydan
 ## Decisions
 
 - Go is the production AI service language. Start with standard-library net/http and context for the HTTP boundary; add router or other dependencies only for a concrete need. Core remains Python/FastAPI; the existing Go messaging gateway is unchanged.
-- Eino (CloudWeGo) is the first framework to validate, not yet a selected dependency. Retain Pydantic AI as the reference fallback; AgentScope and custom Go remain alternatives if evidence warrants reconsideration. Do not build three parallel products.
+- Eino (CloudWeGo) was validated in AI01 and narrowly adopted by the owner on 2026-11-25 for model/tool/agent plumbing, scoped to the AI service. This is not a hard dependency lock: a credential-free hosted-adapter check and live tool-call compatibility need separate approval before locking it. A plain Go adapter remains the fallback for a minimal A1. Retain Pydantic AI as the reference fallback; AgentScope and custom Go remain alternatives if evidence warrants reconsideration. Do not build three parallel products.
 - Personal assistant uses bounded synchronous HTTP request-response initially. The request can wait for the complete model result; Go handlers can concurrently serve independent requests. Propagate cancellation/deadlines through Core, AI and provider calls. Bound input/output, tool iterations, concurrency, retry budget and provider quota usage. Do not hold a business transaction or lock during inference. Return a safe error on timeout; never retry an uncertain consequential write blindly. Future long-running workflows require a separate design decision.
-- No token streaming. Initial inference is through an approved hosted model API, behind a replaceable adapter. Synthetic deterministic model first; no paid call or real-data transfer without explicit approval. Model/vendor, Go/Eino versions, identity/contracts and concrete limits remain to be decided in AI01/A1.
+- No token streaming. Initial inference is through an approved hosted model API, behind a replaceable adapter. Synthetic deterministic model first; no paid call or real-data transfer without explicit approval. Model/vendor, identity/contracts and concrete limits remain A1 decisions; the Eino version pinned in AI01 is provisional until a hard lock is approved.
 - No personal-task queue, local GPU serving, multi-agent workflow engine or dedicated model gateway in A1. Later shared group replies are asynchronous, durable, idempotent and isolated from ordinary messaging; their queue/storage design remains open until D2. No implication that all future work is synchronous.
 - Docker Compose, initially one host with independent service boundaries. Python is available for offline evaluation/analysis, not a required production AI runtime.
 
@@ -42,6 +42,6 @@ Official starting points: [Eino](https://github.com/cloudwego/eino), [Eino docs]
 
 Follow the [AI01 validation brief](../engineering/AI01_VALIDATION_BRIEF.md). The owner or designated coding agent executes locally; the architecture/review assistant prepares the brief and reviews returned evidence. No CI workflows or environment setup by the planning assistant.
 
-## Current evidence
+## Current evidence and decision
 
-Planning rationale only. No framework spike, benchmark, implementation or provider call performed. AI01 remains pending; A1 and all later slices remain NOT_STARTED. Update the relevant ML report/blog with the rationale when those drafts are opened; no fabricated results.
+AI01 was executed locally and independently re-run: Eino v0.9.23 with Go 1.25.14, synthetic fixtures, E01–E06 tested, `gofmt`/build/`go vet`/focused tests/`-race` clean ([record](../engineering/AI01_VALIDATION_RECORD.md), [raw evidence](../../experiments/ai01/evidence/iterations.md)). The owner reviewed the evidence on 2026-11-25 and chose narrow adoption: keep Eino for the model/tool/agent boundary if A1 is authorized, keep the dependency scoped to the AI service, and defer a hard lock until a separately approved adapter check. No hosted provider call, paid request, Core/UI integration, publication or deployment has happened. A1 and all later slices remain NOT_STARTED and need explicit authorization; live tool-call behavior, latency and cost remain NOT MEASURED.
