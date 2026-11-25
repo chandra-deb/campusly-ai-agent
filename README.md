@@ -5,3 +5,5 @@ Campus organizers need to check activity details, draft messages and follow up i
 ## Getting started
 
 Start with the [product specification](docs/specs/CAMPUSLY_AI_PRODUCT_UX_SPEC_v1.0.md), [architecture](docs/engineering/ARCHITECTURE.md) and [active milestones](docs/engineering/MILESTONES.md). Walk through the [synthetic scenario](examples/workshop.md) without credentials or a core checkout. Only the engineering foundation exists today. Build, container and local run commands are deliverables of AI10 once approved.
+
+This is an intentionally public, product-first engineering portfolio. The initial prototype targets one host with independently runnable AI and core boundaries; later scale-out is a separate phase. Technical blogs and living course reports capture the decisions, failures and verified results along the way. No production rollout or measured AI capability is claimed here.
