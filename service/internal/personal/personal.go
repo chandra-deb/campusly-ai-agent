@@ -19,12 +19,15 @@ import (
 )
 
 const (
-	Path        = "/internal/v1/personal/reply"
-	Signature   = "X-Campusly-Signature"
-	maxBody     = 16 << 10
-	maxPrompt   = 2000
-	maxReply    = 4000
-	maxLifetime = 5 * time.Second
+	Path           = "/internal/v1/personal/reply"
+	ContextPath    = "/internal/v2/personal/reply"
+	Signature      = "X-Campusly-Signature"
+	maxBody        = 16 << 10
+	maxPrompt      = 2000
+	maxReply       = 4000
+	maxLifetime    = 5 * time.Second
+	maxContextBody = 96 << 10
+	maxHistory     = 2
 )
 
 type Scope struct {
@@ -32,11 +35,17 @@ type Scope struct {
 	Organization int64 `json:"org_id"`
 }
 
+type Turn struct {
+	Prompt string `json:"prompt"`
+	Reply  string `json:"reply"`
+}
+
 type Request struct {
 	Version int `json:"version"`
 	Scope
 	Expires int64  `json:"expires_ms"`
 	Prompt  string `json:"prompt"`
+	History []Turn `json:"history,omitempty"`
 }
 
 type Reply struct {
@@ -61,16 +70,21 @@ func Sign(key, payload []byte) string {
 func Handler(key []byte, model model.BaseChatModel) http.Handler {
 	s := &service{bytes.Clone(key), model, make(chan struct{}, 8), 3 * time.Second}
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST "+Path, s.reply)
+	mux.HandleFunc("POST "+Path, func(w http.ResponseWriter, r *http.Request) {
+		s.reply(w, r, 1, maxBody)
+	})
+	mux.HandleFunc("POST "+ContextPath, func(w http.ResponseWriter, r *http.Request) {
+		s.reply(w, r, 2, maxContextBody)
+	})
 	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 	return mux
 }
 
-func (s *service) reply(w http.ResponseWriter, r *http.Request) {
+func (s *service) reply(w http.ResponseWriter, r *http.Request, version int, bodyLimit int64) {
 	w.Header().Set("Cache-Control", "no-store")
-	body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, maxBody))
+	body, err := io.ReadAll(http.MaxBytesReader(w, r.Body, bodyLimit))
 	if err != nil {
 		fail(w, http.StatusBadRequest, "invalid_request")
 		return
@@ -83,11 +97,21 @@ func (s *service) reply(w http.ResponseWriter, r *http.Request) {
 	dec := json.NewDecoder(bytes.NewReader(body))
 	dec.DisallowUnknownFields()
 	if !utf8.Valid(body) || dec.Decode(&input) != nil || dec.Decode(new(any)) != io.EOF ||
-		input.Version != 1 || input.Actor <= 0 || input.Organization <= 0 ||
-		strings.TrimSpace(input.Prompt) == "" || len(input.Prompt) > maxPrompt {
+		input.Version != version || input.Actor <= 0 || input.Organization <= 0 ||
+		!validText(input.Prompt, maxPrompt) || (version == 1 && input.History != nil) ||
+		len(input.History) > maxHistory {
 		fail(w, http.StatusBadRequest, "invalid_request")
 		return
 	}
+	messages := make([]*schema.Message, 0, 2*len(input.History)+1)
+	for _, turn := range input.History {
+		if !validText(turn.Prompt, maxPrompt) || !validText(turn.Reply, maxReply) {
+			fail(w, http.StatusBadRequest, "invalid_history")
+			return
+		}
+		messages = append(messages, schema.UserMessage(turn.Prompt), schema.AssistantMessage(turn.Reply, nil))
+	}
+	messages = append(messages, schema.UserMessage(input.Prompt))
 	now := time.Now()
 	expires := time.UnixMilli(input.Expires)
 	if !expires.After(now) || expires.After(now.Add(maxLifetime)) {
@@ -105,17 +129,21 @@ func (s *service) reply(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 	ctx, cancelBudget := context.WithTimeout(ctx, s.budget)
 	defer cancelBudget()
-	result, err := s.model.Generate(ctx, []*schema.Message{schema.UserMessage(input.Prompt)})
+	result, err := s.model.Generate(ctx, messages)
 	if ctx.Err() != nil {
 		fail(w, http.StatusGatewayTimeout, "timeout")
 		return
 	}
 	if err != nil || result == nil || result.Role != schema.Assistant || len(result.ToolCalls) != 0 ||
-		strings.TrimSpace(result.Content) == "" || len(result.Content) > maxReply || !utf8.ValidString(result.Content) {
+		!validText(result.Content, maxReply) {
 		fail(w, http.StatusBadGateway, "generation_failed")
 		return
 	}
-	write(w, http.StatusOK, Reply{1, input.Scope, result.Content})
+	write(w, http.StatusOK, Reply{version, input.Scope, result.Content})
+}
+
+func validText(text string, limit int) bool {
+	return len(text) <= limit && utf8.ValidString(text) && strings.TrimSpace(text) != "" && !strings.ContainsRune(text, 0)
 }
 
 func write(w http.ResponseWriter, status int, data any) {
@@ -138,6 +166,15 @@ func (Fake) Generate(ctx context.Context, messages []*schema.Message, _ ...model
 	text := "This local demo can show how a complete reply arrives. Try asking for a workshop checklist."
 	if strings.Contains(prompt, "workshop") {
 		text = "Workshop checklist\n1. Confirm the room, time and capacity.\n2. Assign a host and a check-in lead.\n3. Test the projector and materials.\n4. Draft a reminder for participants."
+	}
+	if strings.Contains(prompt, "second step") {
+		text = "I need a workshop checklist in this conversation before I can explain the second step."
+		for _, message := range messages[:len(messages)-1] {
+			if message.Role == schema.Assistant && strings.HasPrefix(message.Content, "Workshop checklist") {
+				text = "The second step is to assign a host and a check-in lead."
+				break
+			}
+		}
 	}
 	return schema.AssistantMessage(text, nil), nil
 }

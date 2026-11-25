@@ -7,7 +7,7 @@ Owner-agreed roadmap, 2026-11-25. All implementation slices are NOT_STARTED. AI0
 | AI01 | Foundation | Validate Eino as the leading Go framework candidate using the delegated local [AI01 validation brief](AI01_VALIDATION_BRIEF.md) and [ADR 0003](../decisions/0003-go-bounded-requests.md); review model adapter, scoped identity, deadlines and A1 synthetic/UI path | Record versions, focused results, limitations and framework decision (narrow Eino adoption, 2026-11-25); A1 authorization, hosted-adapter check and paid calls remain separate approvals |
 | A1 | AI01 | [A1 evidence](../evidence/A1.md) · President-only chat UI, core integration, standalone synthetic fixture, complete model response | Open assistant and chat; deny non-president and wrong actor; clean build |
 | A2 | A1 | [A2 evidence](../evidence/A2.md) · Loading, timeout, error and safe retry improvements (basic handling already in A1) | Simulate failure; retry without duplicate turns |
-| A3 | A1 | Private conversation persistence | Reopen chat; verify owner isolation, retention and deletion |
+| A3 | A1 | [A3 evidence](../evidence/A3.md) · Private conversation persistence | Reopen chat; verify owner isolation, retention and deletion |
 | A4 | A3 | Create, rename, switch and delete conversations | Manage separate activity chats |
 | B1 | A1 | Authorized organization awareness | Ask which organizations I manage; deny unrelated or revoked access |
 | B2 | B1 | Sourced activity details, schedule, venue and status | Ask about next workshop; deny wrong tenant, abstain if missing |

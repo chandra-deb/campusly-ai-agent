@@ -87,3 +87,18 @@ H5 checked the echoed ID before completing the turn. This is a recovery
 check for the UI and request contract. The delay was injected deliberately,
 so it cannot estimate model latency or service availability. See the
 [A2 evidence](../evidence/A2.md). Owner review and teach-back are **PENDING**.
+
+## A3 — Private persistence and bounded context
+
+The president can reopen a transcript. Core is responsible for the
+stored history, and Go receives the two latest turns as typed model
+messages. The fixture's answer to “Can you explain the second step?”
+depends on a preceding workshop checklist. That is a controlled
+demonstration of context transport and isolation. It says nothing about
+the quality of a hosted model's reasoning. See the
+[retention and context decision](../decisions/0005-personal-conversation-retention.md).
+
+The synthetic prototype retains conversations until the owner deletes
+them. Core's tests exercise its owner predicate, turn-ID reuse and
+cascade deletion. A real-data policy for backups and third-party model
+transfer is **PENDING**, as are the owner's review and teach-back.
