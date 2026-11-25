@@ -12,7 +12,7 @@ flowchart LR
   AI -->|Scoped tool calls and proposals| API
 ```
 
-Solid core messaging edges exist. All AI components and interactions are proposals. Core owns the integration endpoints and organizer UI. This repo owns orchestration, a versioned client, synthetic counterpart, evaluation and worker lifecycle. The gateway stays in core until the Cloud phase.
+Solid core messaging edges exist. The personal request path below is implemented as a local prototype. The other AI links are proposals. Core owns the integration endpoints and organizer UI. This repo owns orchestration, a versioned client, synthetic counterpart, evaluation and worker lifecycle. The gateway stays in core until the Cloud phase.
 
 Propose versioned request, proposal, receipt and event schemas. Include event ID, version, organization, group and canonical source reference. Reject unknown versions. Core filters eligibility before handoff. Check live visibility again before retrieval and posting. Keep context scoped to actor and audience; never copy a group's timeline into personal history. A personal, conversation, group or organization memory has its own owner, readers, provenance and deletion policy. Promotion between scopes needs review.
 
@@ -24,7 +24,7 @@ For later scaling, keep request handlers stateless and partition worker capacity
 
 The diagram describes eventual boundaries, not A1 requirements. A1 needs only president-scoped UI, Core, AI service and model adapter with one complete non-streamed response and basic failure/loading states. Use a synthetic counterpart for standalone tests. Persistence, reads, confirmed actions and personal memory follow individual slices. Durable group handoff/worker design is reviewed before D2, not required for A1. Independent service boundaries and single-host deployment remain. [ADR 0003](../decisions/0003-go-bounded-requests.md) selects Go and bounded synchronous personal requests; Eino is narrowly adopted for the model/tool/agent boundary, while provider, concrete state, queue and exact contract choices remain open.
 
-## Initial personal request boundary (proposed implementation)
+## A1 local personal request boundary
 
 ```mermaid
 sequenceDiagram
@@ -34,11 +34,12 @@ sequenceDiagram
   participant M as Model adapter
   U->>C: Request (loading state)
   C->>C: Authenticate and authorize
-  C->>A: Scoped request with deadline
+  C->>A: Signed v1 request with actor, organization and expiry
   A->>M: Generate complete response
   M-->>A: Complete output or error
-  A-->>C: Validated result or safe error
+  A-->>C: Complete scoped result or safe error
+  C->>C: Verify reply scope and recheck presidency
   C-->>U: Complete response
 ```
 
-A1 uses net/http and context, with a deterministic fake adapter for credential-free tests. Hosted inference requires separate approval. Propagate cancellation and deadlines, bound concurrent work and retries, and validate output. Do not hold a core database transaction during inference. No personal job queue or streaming. Later group jobs use a separately designed durable asynchronous handoff; ordinary messaging never waits for AI. AI01 proposed default limits; exact contracts and limits remain A1 decisions.
+A1 uses net/http and context, with a deterministic fake adapter for credential-free tests. Hosted inference requires separate approval. Propagate cancellation and deadlines, bound concurrent work and retries, and validate output. Do not hold a core database transaction during inference. No personal job queue or streaming. Later group jobs use a separately designed durable asynchronous handoff; ordinary messaging never waits for AI. See [ADR 0004](../decisions/0004-personal-assistant-boundary.md) for the contract and limits.
