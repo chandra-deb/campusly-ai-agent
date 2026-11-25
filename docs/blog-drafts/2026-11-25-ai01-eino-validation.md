@@ -1,6 +1,6 @@
 # Validating Eino without a model key — AI01 notes
 
-**Draft, 2026-11-25.** For owner review. Not published. This is an engineering note from a small local spike, not a product announcement or a benchmark result.
+**Draft, 2026-11-25.** Owner-reviewed; narrow Eino adoption decided. Not published. This is an engineering note from a small local spike, not a product announcement or a benchmark result.
 
 ## The question
 
@@ -50,6 +50,6 @@ The fake proves that the interfaces, loop, schema metadata and lifecycle hooks w
 
 ## Where I landed
 
-For the narrow path, Eino is practical and cheap to use: real interfaces, a bounded tool loop, configurable retry/cancel, and no streaming machinery in our code. For A1's very first "one complete answer" slice, a plain Go adapter would also be enough. My suggestion is to keep Eino as the leading candidate but narrow its role — model/tool/agent plumbing only — and defer any dependency lock until a separately approved, credential-free hosted-adapter check confirms live tool-call behavior. The owner decides, and A1 is still its own authorization.
+For the narrow path, Eino is practical and cheap to use: real interfaces, a bounded tool loop, configurable retry/cancel, and no streaming machinery in our code. For A1's very first "one complete answer" slice, a plain Go adapter would also be enough. My suggestion is to keep Eino as the leading candidate but narrow its role — model/tool/agent plumbing only — and defer any dependency lock until a separately approved, credential-free hosted-adapter check confirms live tool-call behavior. The owner chose that narrow adoption on 2026-11-25; A1 is still its own authorization.
 
 Reproduce the checks from `experiments/ai01/`: `gofmt -l .`, `go build ./...`, `go vet ./...`, `go test ./... -v`, `go test -race ./... -v`. Versions, pins, fixtures and raw output are in [PLAN.md](../../experiments/ai01/PLAN.md) and [iterations.md](../../experiments/ai01/evidence/iterations.md).

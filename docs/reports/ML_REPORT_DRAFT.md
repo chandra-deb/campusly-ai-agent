@@ -1,16 +1,16 @@
 # Living ML/AI engineering report — draft
 
-**Status:** Draft for owner review. Nothing here is published or accepted.
+**Status:** Draft for owner review. AI01 evidence was reviewed by the owner on 2026-11-25; narrow Eino adoption decided. Nothing here is published.
 **Date:** 2026-11-25.
 **Scope:** This repository owns the AI engineering evidence and this living report. Campusly core owns its own Cloud report and real-data work. See [LEARNING_WORKFLOW](../engineering/LEARNING_WORKFLOW.md) and [DEFINITION_OF_DONE](../engineering/DEFINITION_OF_DONE.md).
 
 ## Why this report exists
 
-Campusly needs a small, permission-bound assistant, not a general autonomous agent. The question for AI01 was practical: can Eino help build the Go service without adding machinery we do not need, or is a plain Go adapter enough for the first slice? Product direction and the A–E roadmap are agreed; framework choice and A1 scope are not.
+Campusly needs a small, permission-bound assistant, not a general autonomous agent. The question for AI01 was practical: can Eino help build the Go service without adding machinery we do not need, or is a plain Go adapter enough for the first slice? Product direction and the A–E roadmap are agreed; narrow Eino adoption is decided, while A1 scope is not.
 
-This report records evidence as work happens. Claims are labelled PROPOSED, TESTED or NOT MEASURED. Owner review and revision of any academic submission happen separately.
+This report records evidence as work happens. Claims are labelled PROPOSED, TESTED, OWNER_DECIDED or NOT MEASURED. Owner review and revision of any academic submission happen separately.
 
-## AI01 — local Eino validation (TESTED, awaiting owner review)
+## AI01 — local Eino validation (TESTED, owner-reviewed)
 
 ### Problem and expectation
 
@@ -49,7 +49,7 @@ Hypotheses were fixed in [PLAN.md](../../experiments/ai01/PLAN.md) before execut
 
 TESTED locally: Eino is practical for the narrow A1 path. It gives typed model/tool/agent abstractions, a bounded ReAct loop and configurable retry/cancel with little glue. What remains application-owned is scoped identity, tool authorization, output validation, safe error contracts and all writes.
 
-Recommendation (PROPOSED, owner decides): **narrow adoption** — keep Eino for the model/tool/agent boundary if A1 is authorized, but do not lock it in until a credential-free hosted-adapter smoke and live tool-call compatibility are separately approved. A plain Go adapter would still suffice for A1's first complete-response slice; Eino earns its place when authorized tools and drafts arrive, and even then only if live provider behavior matches the fake. No comparison framework was built; no superiority claim is made.
+Owner decision (2026-11-25, OWNER_DECIDED): **narrow adoption** — keep Eino for the model/tool/agent boundary if A1 is authorized, keep the dependency scoped to the AI service, and do not lock it in until a credential-free hosted-adapter smoke and live tool-call compatibility are separately approved. A plain Go adapter remains the fallback for a minimal A1. This decision does not authorize A1. No comparison framework was built; no superiority claim is made.
 
 ### Limitations and next questions
 
@@ -63,4 +63,4 @@ Recommendation (PROPOSED, owner decides): **narrow adoption** — keep Eino for 
 
 President-only personal chat with one complete non-streamed response; deterministic fake adapter for tests; hosted adapter behind the same interface only after approval; scoped actor/organization on every request; explicit deadline, retry cap, tool iteration cap and safe error text; no persistence, no tool writes, no group AI and no queue. Open questions: exact model adapter and vendor, contract versioning, identity propagation from Core, error/timeout wording, and final numeric limits. See [TASKS.md](../engineering/TASKS.md) A1; AI01 does not authorize it.
 
-**Owner review status:** not yet reviewed. The architecture/review assistant and owner should read the raw evidence together before deciding on Eino and A1.
+**Owner review status:** evidence reviewed on 2026-11-25; narrow Eino adoption decided. A1 authorization, adapter/vendor, contracts and limits remain open.

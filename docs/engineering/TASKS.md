@@ -1,10 +1,10 @@
 # AI work queue — small visible slices
 
-Owner-agreed roadmap, 2026-11-25. All implementation slices are NOT_STARTED. AI01 is the pending design review. Dependencies are minimum technical prerequisites, not a rigid chain. Each slice needs explicit scope, usable local UI, focused checks, owner manual accept/fix decision and living report/blog evidence. Core/UI changes belong in their owning repositories.
+Owner-agreed roadmap, 2026-11-25. All implementation slices are NOT_STARTED. AI01 is tested and owner-reviewed: narrow Eino adoption decided; A1 authorization still pending. Dependencies are minimum technical prerequisites, not a rigid chain. Each slice needs explicit scope, usable local UI, focused checks, owner manual accept/fix decision and living report/blog evidence. Core/UI changes belong in their owning repositories.
 
 | ID | Depends on | Deliverable | Manual test and focused checks |
 | --- | --- | --- | --- |
-| AI01 | Foundation | Validate Eino as the leading Go framework candidate using the delegated local [AI01 validation brief](AI01_VALIDATION_BRIEF.md) and [ADR 0003](../decisions/0003-go-bounded-requests.md); review model adapter, scoped identity, deadlines and A1 synthetic/UI path | Record versions, focused results, limitations, framework decision and explicit A1 authorization; no paid calls without separate approval |
+| AI01 | Foundation | Validate Eino as the leading Go framework candidate using the delegated local [AI01 validation brief](AI01_VALIDATION_BRIEF.md) and [ADR 0003](../decisions/0003-go-bounded-requests.md); review model adapter, scoped identity, deadlines and A1 synthetic/UI path | Record versions, focused results, limitations and framework decision (narrow Eino adoption, 2026-11-25); A1 authorization, hosted-adapter check and paid calls remain separate approvals |
 | A1 | AI01 | President-only chat UI, core integration, standalone synthetic fixture, complete model response | Open assistant and chat; deny non-president and wrong actor; clean build |
 | A2 | A1 | Loading, timeout, error and safe retry improvements (basic handling already in A1) | Simulate failure; retry without duplicate turns |
 | A3 | A1 | Private conversation persistence | Reopen chat; verify owner isolation, retention and deletion |
