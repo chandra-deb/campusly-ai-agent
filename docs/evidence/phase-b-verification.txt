@@ -1,0 +1,110 @@
+Phase B command output (synthetic fixtures)
+
+The sections below preserve test output while omitting local paths, generated IDs, and startup logs.
+Reproduction commands are recorded in the slice evidence.
+
+b2-core.log
+platform linux -- Python 3.14.3, pytest-9.0.1, pluggy-1.6.0
+collected 2 items
+tests/test_personal_assistant/test_context.py ..                         [100%]
+============================== 2 passed in 11.61s ==============================
+
+b3-core-team.log
+platform linux -- Python 3.14.3, pytest-9.0.1, pluggy-1.6.0
+collected 3 items
+tests/test_personal_assistant/test_context.py ...                        [100%]
+============================== 3 passed in 10.26s ==============================
+
+b4-core.log
+platform linux -- Python 3.14.3, pytest-9.0.1, pluggy-1.6.0
+collected 4 items
+tests/test_personal_assistant/test_context.py ....                       [100%]
+============================== 4 passed in 11.73s ==============================
+
+b5-core.log
+platform linux -- Python 3.14.3, pytest-9.0.1, pluggy-1.6.0
+collected 16 items
+tests/test_personal_assistant/test_actions.py ...                        [ 18%]
+tests/test_personal_assistant/test_api.py ....                           [ 43%]
+tests/test_personal_assistant/test_context.py ....                       [ 68%]
+tests/test_personal_assistant/test_conversation_management.py ..         [ 81%]
+tests/test_personal_assistant/test_conversations.py ...                  [100%]
+============================= 16 passed in 24.26s ==============================
+
+b5-actions-final.log
+platform linux -- Python 3.14.3, pytest-9.0.1, pluggy-1.6.0
+collected 3 items
+tests/test_personal_assistant/test_actions.py ...                        [100%]
+============================== 3 passed in 8.88s ===============================
+
+b6-core.log
+platform linux -- Python 3.14.3, pytest-9.0.1, pluggy-1.6.0
+collected 5 items
+tests/test_personal_assistant/test_context.py .....                      [100%]
+============================== 5 passed in 17.47s ==============================
+
+b7-locks-final.log
+platform linux -- Python 3.14.3, pytest-9.0.1, pluggy-1.6.0
+collected 13 items
+tests/test_personal_assistant/test_actions.py ....                       [ 30%]
+tests/test_activity_chat/test_http.py ....                               [ 61%]
+tests/test_activity_chat/test_inquiries.py .....                         [100%]
+============================= 13 passed in 33.27s ==============================
+
+b8-core.log
+platform linux -- Python 3.14.3, pytest-9.0.1, pluggy-1.6.0
+collected 30 items
+tests/test_personal_assistant/test_actions.py .....                      [ 16%]
+tests/test_personal_assistant/test_api.py ....                           [ 30%]
+tests/test_personal_assistant/test_context.py ......                     [ 50%]
+tests/test_personal_assistant/test_conversation_management.py ..         [ 56%]
+tests/test_personal_assistant/test_conversations.py ...                  [ 66%]
+tests/test_activity_chat/test_http.py ....                               [ 80%]
+tests/test_activity_chat/test_inquiries.py .....                         [ 96%]
+tests/test_activity_chat/test_committed.py .                             [100%]
+======================== 30 passed in 99.35s (0:01:39) =========================
+
+b8-go-race.log
+=== RUN   TestCerebrasSmokeOnlySendsTheApprovedPromptOnce
+--- PASS: TestCerebrasSmokeOnlySendsTheApprovedPromptOnce (0.00s)
+=== RUN   TestCerebrasSmokeRejectsTruncatedReplyAndProviderError
+=== RUN   TestCerebrasSmokeRejectsTruncatedReplyAndProviderError/truncated
+=== RUN   TestCerebrasSmokeRejectsTruncatedReplyAndProviderError/unauthorized
+--- PASS: TestCerebrasSmokeRejectsTruncatedReplyAndProviderError (0.00s)
+=== RUN   TestSignedIntent
+--- PASS: TestSignedIntent (0.00s)
+=== RUN   TestActivityDetailsIntent
+--- PASS: TestActivityDetailsIntent (0.00s)
+=== RUN   TestActivityDraftProposal
+--- PASS: TestActivityDraftProposal (0.00s)
+=== RUN   TestGroupMessageKeepsExactTextForReview
+--- PASS: TestGroupMessageKeepsExactTextForReview (0.00s)
+=== RUN   TestCompleteReply
+--- PASS: TestCompleteReply (0.00s)
+=== RUN   TestRejectsTamperingExpiryAndWrongVersion
+--- PASS: TestRejectsTamperingExpiryAndWrongVersion (0.00s)
+=== RUN   TestDeadlineAndMalformedOutput
+--- PASS: TestDeadlineAndMalformedOutput (0.05s)
+=== RUN   TestContextIsBoundedAndUsesSignedConversation
+--- PASS: TestContextIsBoundedAndUsesSignedConversation (0.00s)
+PASS
+ok  	campusly.local/assistant/internal/personal	1.112s
+
+b8-h5-build.log
+Compiler version: 5.34（vue3）
+DONE  Build complete.
+
+b8-browser.log
+API 200 /api/organizations/1/personal-assistant/v1/conversations/<conversation-id>/actions/preview
+API 200 /api/organizations/1/personal-assistant/v1/conversations/<conversation-id>/actions/confirm
+API 200 /api/organizations/1/personal-assistant/v1/conversations/<conversation-id>/actions/preview
+API 200 /api/organizations/1/personal-assistant/v1/conversations/<conversation-id>/actions/confirm
+API 200 /api/activities/1/discussion/announcement-link
+API 200 /api/activities/1/discussion/messages
+API 503 /api/activities/1/discussion/subscription-token
+API 200 /api/organizations/1/personal-assistant/v1/conversations/<conversation-id>/actions/preview
+API 200 /api/organizations/1/personal-assistant/v1/conversations/<conversation-id>/actions/confirm
+API 200 /api/activities/1/discussion/announcement-link
+API 200 /api/activities/1/discussion/messages
+API 503 /api/activities/1/discussion/subscription-token
+PASS: create, rename, switch, organization isolation and targeted delete

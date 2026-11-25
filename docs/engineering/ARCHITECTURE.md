@@ -127,3 +127,8 @@ names the canonical discussion and Core checks membership and president
 capability before committing the public notice, its outbox events and
 the receipt. Manual discussion paths use the default transaction
 behavior. H5 opens the confirmed post by its message ID.
+
+B8 uses that same room and receipt path for a public text message.
+It sends the president's approved text through the existing chat
+service and creates only its ordinary message event. Private
+inquiries stay in the discussion's existing private composer.
