@@ -117,3 +117,13 @@ Phase A establishes the product path and permission boundaries that
 later evaluations can use. Grounding, abstention, quality differences
 between models, latency and cost remain unmeasured. Owner acceptance
 and review of the draft remain **PENDING**.
+
+## Hosted adapter smoke — Cerebras
+
+The owner chose `gpt-oss-120b` for a one-prompt A4 check. The
+credential-free tests verified Chat Completions request shape, the fixed
+synthetic input and the one-attempt bound. One real request from H5
+reached the provider and received HTTP 403. The read-only models
+endpoint returned a geographic-access diagnostic. Hosted completion,
+key validity, model quality and model latency remain unverified.
+See the [Cerebras smoke evidence](../evidence/CEREBRAS_SMOKE.md).
