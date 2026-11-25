@@ -190,3 +190,14 @@ activity or receipt. See [B5 evidence](../evidence/B5.md).
 
 This is a synthetic application integrity check. Cloud failure recovery,
 load and model accuracy remain **NOT MEASURED**. Owner review is **PENDING**.
+
+## B6 — Grounded notice drafts
+
+A notice is composed from the authorized activity and first future
+scheduled session. The test checked the source fields, edited the draft
+in H5, and demonstrated abstention after the venue was removed. No
+message was written by the draft request. See [B6 evidence](../evidence/B6.md).
+
+This tests provenance for a deterministic template. Hosted drafting
+quality and Cloud behavior remain **NOT MEASURED**. Owner review is
+**PENDING**.

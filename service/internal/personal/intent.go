@@ -32,6 +32,8 @@ func resolveIntent(input Request) IntentReply {
 			{"show details for ", "activity_details"},
 			{"how many registered for ", "activity_statistics"},
 			{"how many people registered for ", "activity_statistics"},
+			{"draft a venue-change notice for ", "notice_draft"},
+			{"draft a notice for ", "notice_draft"},
 		} {
 			if strings.HasPrefix(lower, operation.prefix) {
 				reply.Intent = operation.intent
