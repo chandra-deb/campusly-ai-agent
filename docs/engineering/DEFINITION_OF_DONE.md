@@ -14,6 +14,13 @@ Record task ID, revisions on each side, changed contract version, exact focused 
 - Test complete-response behavior, loading, timeout/failure handling and current-scope authorization when relevant. No streaming requirement. Required privacy, deletion and idempotency safeguards precede the capabilities that need them.
 - Capture sanitized screenshots and feedback for reports/blogs. Agent tests do not imply owner acceptance.
 
+## Mandatory AI phase gate (2026-11-26)
+
+- Deterministic focused tests and scoped end-to-end integration pass; fake mode remains reproducible without provider credentials.
+- Real LLM and native tool orchestration are exercised against the owner's existing local Campusly dummy-data database. Cover all phase capabilities, including non-tool context/draft/confirmation behavior; verify answers against canonical Core records.
+- Record real provider/model, revisions, case, tool selections/arguments/results, latency/usage if available, failures and omissions; check paraphrases, multi-tool reasoning, missing/ambiguous inputs, denial, retry and exact human confirmation when relevant.
+- Keep deterministic verification, real-model verification and owner acceptance separate. A failed/blocked live call is not success. Owner accepts or requests fixes before advancing to the next AI phase; R4 gates D1. No production, credentials in logs, or unauthorized spend/deployment.
+
 ## Framework and runtime verification
 
 For framework-dependent changes, record official documentation/source references for the pinned version, exact dependency versions, formatting, build, focused Go test and vet outcomes (race checks where concurrency is exercised and supported). Verify behavior and permissions, not just compilation. For personal requests test deadline/cancellation, safe error and relevant concurrency/retry limits. No framework validation result may be claimed before AI01 runs. Retain errors and failed attempts as evidence.
