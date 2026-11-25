@@ -21,6 +21,7 @@ import (
 const (
 	Path           = "/internal/v1/personal/reply"
 	ContextPath    = "/internal/v2/personal/reply"
+	IntentPath     = "/internal/v3/personal/intent"
 	Signature      = "X-Campusly-Signature"
 	maxBody        = 16 << 10
 	maxPrompt      = 2000
@@ -76,6 +77,9 @@ func Handler(key []byte, model model.BaseChatModel) http.Handler {
 	mux.HandleFunc("POST "+ContextPath, func(w http.ResponseWriter, r *http.Request) {
 		s.reply(w, r, 2, maxContextBody)
 	})
+	mux.HandleFunc("POST "+IntentPath, func(w http.ResponseWriter, r *http.Request) {
+		s.reply(w, r, 3, maxBody)
+	})
 	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 	})
@@ -98,7 +102,7 @@ func (s *service) reply(w http.ResponseWriter, r *http.Request, version int, bod
 	dec.DisallowUnknownFields()
 	if !utf8.Valid(body) || dec.Decode(&input) != nil || dec.Decode(new(any)) != io.EOF ||
 		input.Version != version || input.Actor <= 0 || input.Organization <= 0 ||
-		!validText(input.Prompt, maxPrompt) || (version == 1 && input.History != nil) ||
+		!validText(input.Prompt, maxPrompt) || (version != 2 && input.History != nil) ||
 		len(input.History) > maxHistory {
 		fail(w, http.StatusBadRequest, "invalid_request")
 		return
@@ -129,6 +133,10 @@ func (s *service) reply(w http.ResponseWriter, r *http.Request, version int, bod
 	defer cancel()
 	ctx, cancelBudget := context.WithTimeout(ctx, s.budget)
 	defer cancelBudget()
+	if version == 3 {
+		write(w, http.StatusOK, resolveIntent(input))
+		return
+	}
 	result, err := s.model.Generate(ctx, messages)
 	if ctx.Err() != nil {
 		fail(w, http.StatusGatewayTimeout, "timeout")
