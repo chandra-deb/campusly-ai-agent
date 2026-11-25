@@ -191,3 +191,32 @@ sequenceDiagram
 The suggestion path stays in Core. It needs neither a provider
 request nor a job. Independently saved choices remain separate from
 the transcript's lifecycle.
+
+## R1–R4 — Visible tool activity (approved 2026-11-26; proposed implementation)
+
+Use a versioned, authenticated SSE response for personal assistant progress, with a complete final result rather than generated text deltas. Core authenticates and authorizes the turn, forwards the scoped request to Go, and relays only validated events for that actor, organization, conversation and turn. Keep existing deterministic mode and application-owned confirmations. The existing bounded non-streamed response contract is historical for A–C; R1 must explicitly version the transport and verify deadlines and cancellation through both hops. Do not put assistant events on public discussion channels or require a personal job queue.
+
+```mermaid
+sequenceDiagram
+  participant H as H5
+  participant C as CAMS Core
+  participant G as Go AI
+  participant M as LLM
+  H->>C: Authenticated assistant turn
+  C->>G: Scoped signed request
+  G->>M: Generate / select tools
+  loop Each actual tool execution
+    G-->>C: tool_started (safe label, call ID)
+    C-->>H: Authorized SSE progress
+    G->>C: Scoped tool request
+    C-->>G: Authorized result or error
+    G-->>C: tool_finished or tool_failed (duration)
+    C-->>H: Authorized SSE status
+    G->>M: Tool result
+  end
+  G-->>C: Complete final result or terminal error
+  C->>C: Recheck scope and commit canonical turn if successful
+  C-->>H: Final complete reply or safe error
+```
+
+The event schema should carry a version, request/turn ID, stable call ID, sequence, safe display label, state and elapsed duration where applicable. Use actual execution instrumentation, not inferred model text; tool failures and repeated/parallel calls remain distinguishable. Core enforces scope on relay and history retrieval; H5 ignores stale/wrong-turn or duplicate events and handles interruption, timeout and cancellation without claiming success or replaying a confirmed write. Retain only minimal scoped per-turn summary metadata with the conversation so it can be reopened and deleted with the turn; do not persist raw model reasoning or tool arguments/results in UI history. Exact wire schema, SSE client choice (including authenticated POST/stream reading), limits and reconnect strategy are R1 design details. For write proposals show preparation/preview separately from a canonical confirmation receipt; progress is never approval. Measure tool duration separately from overall inference/turn latency. Optional sanitized developer diagnostics are a later scoped option, not a prerequisite.
