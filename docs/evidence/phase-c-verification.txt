@@ -12,3 +12,6 @@ C3 · Core final preference tests: 2 passed in 14.27s
 C3 · Go race tests: ok campusly.local/assistant/internal/personal 1.126s
 C3 · H5: vue-tsc and Uni H5 build exited 0
 C3 · Browser: PASS: relevant recall crosses chats and stops after removal
+C4 · Core focused memory tests: 3 passed in 17.54s
+C4 · H5: vue-tsc and Uni H5 build exited 0
+C4 · Browser: PASS: owner inspects, edits, and removes a preference with visible reply changes
