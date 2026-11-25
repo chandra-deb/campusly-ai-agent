@@ -10,6 +10,10 @@ Start with the [product specification](docs/specs/CAMPUSLY_AI_PRODUCT_UX_SPEC_v1
 
 Go is the selected production AI service language, with standard-library HTTP initially and complete, bounded personal requests. AI01 validated Eino locally and the owner chose narrow adoption for the model/tool/agent boundary; the dependency stays scoped to the AI service and a hard lock awaits a separately approved adapter check. The Phase A lab uses a deterministic model adapter. Python remains useful for offline ML evaluation. Shared group processing will be asynchronous and independent of normal messaging. See [ADR 0003](docs/decisions/0003-go-bounded-requests.md) for rationale, validation plan and guardrails.
 
+## Current next milestone
+
+A–C have deterministic local evidence. The real-model gate R1–R4 is next, before D1: configurable hosted inference, all existing business capabilities, conversation/memory and integrated owner testing on the existing local dummy-data Campusly database. Keep fake mode for regression. The restricted [Cerebras smoke](docs/evidence/CEREBRAS_SMOKE.md) was blocked and is not a general real-model adapter. Follow [milestones](docs/engineering/MILESTONES.md) and [tasks](docs/engineering/TASKS.md) for the active sequence.
+
 ## Run the local assistant
 
 The Go service and its fixture use the provisional Eino v0.9.23 adapter. From
