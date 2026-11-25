@@ -48,3 +48,12 @@ Personal memory grants no authority. Keep it outside shared AI and
 private inquiry processing. This policy covers the synthetic local
 prototype. Live consent, backup erasure, export and provider transfer
 remain rollout decisions.
+
+C2 stores format, detail and tone as enumerated values in PostgreSQL.
+The database rejects unknown combinations and enforces one value per
+kind per owner and organization. Core authenticates and checks the
+active presidency again on every memory API call. The role lock
+serializes saves for a workspace. Retrying the same choice returns
+its existing entry, and a different choice cannot overwrite it
+through the create path. The deletion URL uses the saved entry's ID
+so replay cannot erase a new entry created later under the same kind.
