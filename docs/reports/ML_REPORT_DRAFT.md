@@ -230,3 +230,17 @@ synthetic data. Hosted language coverage, Cloud throughput and
 production rollout remain outside the evidence. The owner has a
 [review guide](../evidence/PHASE_B.md). Owner acceptance and report
 review are **PENDING**.
+
+## C1 — Recent context in long private chats
+
+The first local assistant sent two earlier exchanges. C1 takes a
+contiguous suffix of up to eight whole turns with a 12,000-byte budget
+that includes the current prompt. The signed v4 reply boundary repeats
+the checks. Reading the full transcript still retrieves the saved
+turns from Core.
+
+The synthetic scenario asks about a checklist after several unrelated
+turns. Separate checks cover a fresh conversation and multibyte text.
+These demonstrate context selection and isolation, while hosted
+answer quality, token counts and Cloud behavior remain **NOT
+MEASURED**. Owner review is pending. [C1 evidence](../evidence/C1.md).

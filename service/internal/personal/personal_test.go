@@ -22,6 +22,11 @@ func validRequest() Request {
 
 func send(t *testing.T, handler http.Handler, input Request, signBefore func(*Request)) *httptest.ResponseRecorder {
 	t.Helper()
+	return sendTo(t, handler, Path, input, signBefore)
+}
+
+func sendTo(t *testing.T, handler http.Handler, path string, input Request, signBefore func(*Request)) *httptest.ResponseRecorder {
+	t.Helper()
 	payload, err := json.Marshal(input)
 	if err != nil {
 		t.Fatal(err)
@@ -34,7 +39,7 @@ func send(t *testing.T, handler http.Handler, input Request, signBefore func(*Re
 			t.Fatal(err)
 		}
 	}
-	r := httptest.NewRequest(http.MethodPost, Path, bytes.NewReader(payload))
+	r := httptest.NewRequest(http.MethodPost, path, bytes.NewReader(payload))
 	r.Header.Set(Signature, signature)
 	w := httptest.NewRecorder()
 	handler.ServeHTTP(w, r)
@@ -108,28 +113,48 @@ func TestContextIsBoundedAndUsesSignedConversation(t *testing.T) {
 	request.Prompt = "Explain the second step"
 	request.History = []Turn{{"Workshop checklist", "Workshop checklist: host and check-in lead"}}
 
-	sendContext := func(input Request) *httptest.ResponseRecorder {
-		payload, err := json.Marshal(input)
-		if err != nil {
-			t.Fatal(err)
-		}
-		r := httptest.NewRequest(http.MethodPost, ContextPath, bytes.NewReader(payload))
-		r.Header.Set(Signature, Sign(testKey, payload))
-		w := httptest.NewRecorder()
-		handler.ServeHTTP(w, r)
-		return w
-	}
-	w := sendContext(request)
+	w := sendTo(t, handler, ContextPath, request, nil)
 	if w.Code != 200 || !strings.Contains(w.Body.String(), "assign a host") {
 		t.Fatalf("history was not used: %d %s", w.Code, w.Body)
 	}
 	request.History = nil
-	w = sendContext(request)
+	w = sendTo(t, handler, ContextPath, request, nil)
 	if w.Code != 200 || !strings.Contains(w.Body.String(), "I need a workshop checklist") {
 		t.Fatalf("context leaked between calls: %d %s", w.Code, w.Body)
 	}
 	request.History = make([]Turn, maxHistory+1)
-	if w = sendContext(request); w.Code != 400 {
+	if w = sendTo(t, handler, ContextPath, request, nil); w.Code != 400 {
 		t.Fatalf("too many turns: %d", w.Code)
+	}
+}
+
+func TestRecentContextUsesWholeTurnsWithinByteBudget(t *testing.T) {
+	handler := Handler(testKey, Fake{})
+	request := validRequest()
+	request.Version, request.Prompt = 4, "Explain the second step"
+	request.History = []Turn{{"Workshop checklist", "Workshop checklist: host and check-in lead"}}
+	for range maxRecentTurns - 1 {
+		request.History = append(request.History, Turn{"General planning question", "General reply"})
+	}
+	w := sendTo(t, handler, RecentPath, request, nil)
+	if w.Code != 200 || !strings.Contains(w.Body.String(), "assign a host") {
+		t.Fatalf("window lost an eligible older turn: %d %s", w.Code, w.Body)
+	}
+
+	request.History = append(request.History, Turn{"One more question", "One more reply"})
+	if w = sendTo(t, handler, RecentPath, request, nil); w.Code != 400 {
+		t.Fatalf("too many recent turns returned %d", w.Code)
+	}
+
+	wide := Turn{strings.Repeat("界", 666), strings.Repeat("答", 1333)}
+	request.History = []Turn{wide, wide}
+	if w = sendTo(t, handler, RecentPath, request, nil); w.Code != 400 {
+		t.Fatalf("over-budget UTF-8 text returned %d", w.Code)
+	}
+
+	request.History = nil
+	w = sendTo(t, handler, RecentPath, request, nil)
+	if w.Code != 200 || !strings.Contains(w.Body.String(), "I need a workshop checklist") {
+		t.Fatalf("empty context reused a previous request: %d %s", w.Code, w.Body)
 	}
 }
