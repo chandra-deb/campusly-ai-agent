@@ -1,6 +1,6 @@
 # AI work queue
 
-Each row requires the previous row, starting with the foundation. Approve scope before implementation. Integration tasks include corresponding core or UI changes reviewed in their owning repositories.
+The rows below are the recommended MVP execution order, not blanket technical dependencies. Approve scope before implementation. AI01 precedes AI10; personal read/approval work (AI11–AI13) and shared event/reply work (AI14–AI15) require the applicable reviewed contracts and AI10 foundation, not necessarily each other's UI. AI16 integrates both paths; AI17 follows successful integration. Keep the MVP focused and reassess independent later increments after local acceptance; parallel work requires explicit scope and compatible interfaces. Each substantive task updates the relevant living report/blog drafts or records N/A. Integration tasks include corresponding core or UI changes reviewed in their owning repositories.
 
 | ID | Deliverable | Focused check and exit |
 | --- | --- | --- |
